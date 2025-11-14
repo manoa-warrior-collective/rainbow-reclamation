@@ -1,7 +1,6 @@
 name: Issue
 description: Create an issue in Rainbow Reclamation.
 projects: "rainbow-reclamation/M1"
-assignee: ''
 body:
   - type: textarea
     attributes:
