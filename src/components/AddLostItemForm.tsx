@@ -12,7 +12,7 @@ import { AddStuffSchema } from '@/lib/validationSchemas';
 
 const onSubmit = async (data: { name: string; description: string; owner: string }) => {
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
-  await AddLostItem(data);
+  await addStuff(data);
   swal('Success', 'Lost item has been added', 'success', {
     timer: 2000,
   });
