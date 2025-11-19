@@ -10,10 +10,10 @@ import { addStuff } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddStuffSchema } from '@/lib/validationSchemas';
 
-const onSubmit = async (data: { name: string; description: string; image: string; owner: string }) => {
+const onSubmit = async (data: { name: string; quantity: number; owner: string; condition: string }) => {
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
   await addStuff(data);
-  swal('Success', 'Lost item has been added', 'success', {
+  swal('Success', 'Your item has been added', 'success', {
     timer: 2000,
   });
 };
@@ -48,7 +48,7 @@ const AddLostItemForm: React.FC = () => {
             <Card.Body>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label>Item Name</Form.Label>
                   <input
                     type="text"
                     {...register('name')}
@@ -59,19 +59,19 @@ const AddLostItemForm: React.FC = () => {
                 <Form.Group>
                   <Form.Label>Description</Form.Label>
                   <textarea
-                    {...register('description')}
-                    className={`form-control ${errors.description ? 'is-invalid' : ''}`}
+                    {...register('quantity')}
+                    className={`form-control ${errors.quantity ? 'is-invalid' : ''}`}
                   />
-                  <div className="invalid-feedback">{errors.description?.message}</div>
+                  <div className="invalid-feedback">{errors.quantity?.message}</div>
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Upload an image</Form.Label>
                   <input
                     type="text"
-                    {...register('image')}
-                    className={`form-control ${errors.image ? 'is-invalid' : ''}`}
+                    {...register('name')}
+                    className={`form-control ${errors.name ? 'is-invalid' : ''}`}
                   />
-                  <div className="invalid-feedback">{errors.image?.message}</div>
+                  <div className="invalid-feedback">{errors.name?.message}</div>
                 </Form.Group>
                 <input type="hidden" {...register('owner')} value={currentUser} />
                 <Form.Group className="form-group">
