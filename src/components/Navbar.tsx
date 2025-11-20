@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-indent, @typescript-eslint/indent */
+
 'use client';
 
 import { useSession } from 'next-auth/react';
@@ -18,29 +20,6 @@ const NavBar: React.FC = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
-            {currentUser
-              ? [
-                <Nav.Link
-                  id="report-lost-nav"
-                  href="/report-lost"
-                  key="report-lost"
-                  active={pathName === '/report-lost'}
-                >
-                  Report Lost Item
-                </Nav.Link>,
-                <Nav.Link
-                  id="browse-found-nav"
-                  href="/browse-found"
-                  key="browse-found"
-                  active={pathName === '/browse-found'}
-                >
-                  Browse Found Items
-                </Nav.Link>,
-                <Nav.Link id="my-items-nav" href="/my-items" key="my-items" active={pathName === '/my-items'}>
-                  My Items
-                </Nav.Link>,
-              ]
-              : ''}
             {currentUser && role === 'ADMIN' ? (
               <Nav.Link id="admin-nav" href="/admin" key="admin" active={pathName === '/admin'}>
                 Admin
