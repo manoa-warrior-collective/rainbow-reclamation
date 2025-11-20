@@ -14,7 +14,7 @@ const AdminPage = async () => {
   const users = await prisma.user.findMany({});
   const registeredUsers = await prisma.user.count();
 
-  // Mock data for stats that don't exist yet in your schema
+  // Mockup data for stats that don't exist yet in your schema
   const stats = {
     activeListings: 42,
     registeredUsers,
