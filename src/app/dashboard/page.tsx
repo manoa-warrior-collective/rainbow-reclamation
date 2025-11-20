@@ -1,4 +1,3 @@
-// src/app/dashboard/page.tsx
 'use client';
 
 import { Container, Row, Col, Card, Button, Table, Badge } from 'react-bootstrap';
@@ -54,7 +53,7 @@ const UserDashboard = () => {
             <Card className="h-100">
               <Card.Body>
                 <Card.Title>Report a Lost Item</Card.Title>
-                <Card.Text>Lost something on campus? Let us know and we'll help you find it.</Card.Text>
+                <Card.Text>Lost something on campus? Let us know and we&apos;ll help you find it.</Card.Text>
                 <Button variant="primary" onClick={() => router.push('/report-lost')}>
                   Report Lost Item
                 </Button>
