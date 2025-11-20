@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 const UserDashboard = () => {
   const router = useRouter();
 
-  // Mock data for user's lost items
+  // Mockup data for user's lost items
   const myLostItems = [
     {
       id: 1,
