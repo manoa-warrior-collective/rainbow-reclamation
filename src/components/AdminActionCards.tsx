@@ -1,5 +1,4 @@
 // components/admin/AdminActionCards.tsx
-
 'use client';
 
 import { useRouter } from 'next/navigation';
@@ -22,7 +21,9 @@ const AdminActionCards: React.FC = () => {
   };
 
   const handleManageUsers = () => {
-    router.push('/admin/users');
+    // Scroll to users section on same page
+    const usersSection = document.getElementById('list');
+    usersSection?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
