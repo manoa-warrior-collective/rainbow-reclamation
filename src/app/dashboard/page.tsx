@@ -52,10 +52,12 @@ const UserDashboard = () => {
           <Col md={6} className="mb-3">
             <Card className="h-100">
               <Card.Body>
-                <Card.Title>Report a Lost Item</Card.Title>
-                <Card.Text>Lost something on campus? Let us know and we&apos;ll help you find it.</Card.Text>
-                <Button variant="primary" onClick={() => router.push('/report-lost')}>
-                  Report Lost Item
+                <Card.Title>Report an Item</Card.Title>
+                <Card.Text>
+                  Lost or found something on campus? Let us know and we&apos;ll help connect owners with their items.
+                </Card.Text>
+                <Button variant="primary" onClick={() => router.push('/report-item')}>
+                  Report Item
                 </Button>
               </Card.Body>
             </Card>
@@ -63,9 +65,9 @@ const UserDashboard = () => {
           <Col md={6} className="mb-3">
             <Card className="h-100">
               <Card.Body>
-                <Card.Title>Browse Found Items</Card.Title>
-                <Card.Text>Check if your lost item has been found and turned in.</Card.Text>
-                <Button variant="primary" onClick={() => router.push('/browse-found')}>
+                <Card.Title>Browse Items</Card.Title>
+                <Card.Text>Check if your lost item has been found or browse all items.</Card.Text>
+                <Button variant="primary" onClick={() => router.push('/browse-items')}>
                   Browse Items
                 </Button>
               </Card.Body>
