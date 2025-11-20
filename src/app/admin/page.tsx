@@ -1,4 +1,3 @@
-// app/admin/dashboard/page.tsx
 import { getServerSession } from 'next-auth';
 import { Container } from 'react-bootstrap';
 import { adminProtectedPage } from '@/lib/page-protection';
