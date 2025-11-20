@@ -1,68 +1,45 @@
+// app/admin/dashboard/page.tsx
 import { getServerSession } from 'next-auth';
-import { Col, Container, Row, Table } from 'react-bootstrap';
-import StuffItemAdmin from '@/components/StuffItemAdmin';
-import { prisma } from '@/lib/prisma';
+import { Container } from 'react-bootstrap';
 import { adminProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
+import { prisma } from '@/lib/prisma';
+import StatsGrid from '@/components/StatsGrid';
+import AdminActionCards from '@/components/AdminActionCards';
 
-const AdminPage = async () => {
+const AdminDashboard = async () => {
   const session = await getServerSession(authOptions);
   adminProtectedPage(
     session as {
       user: { email: string; id: string; randomKey: string };
     } | null,
   );
-  const stuff = await prisma.stuff.findMany({});
-  const users = await prisma.user.findMany({});
+
+  // Fetch available stats from your database
+  const registeredUsers = await prisma.user.count();
+
+  // Mock data for stats that don't exist yet in your schema
+  const stats = {
+    activeListings: 42,
+    registeredUsers,
+    successfulMatches: 23,
+    pendingVerification: 8,
+  };
 
   return (
     <main>
-      <Container id="list" fluid className="py-3">
-        <Row>
-          <Col>
-            <h1>Rainbow Reclamation Admin</h1>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Quantity</th>
-                  <th>Condition</th>
-                  <th>Owner</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {stuff.map((item) => (
-                  <StuffItemAdmin key={item.id} {...item} />
-                ))}
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h1>List Users Admin</h1>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Email</th>
-                  <th>Role</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.email}</td>
-                    <td>{user.role}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
+      <header className="admin-header">
+        <Container>
+          <h1>🛡️ Admin Dashboard - Rainbow Reclamation</h1>
+        </Container>
+      </header>
+
+      <Container className="py-4">
+        <StatsGrid stats={stats} />
+        <AdminActionCards />
       </Container>
     </main>
   );
 };
 
-export default AdminPage;
+export default AdminDashboard;
