@@ -3,7 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 /** Render a list of stuff for the logged in user. */
 const RecoveryPage = async () => (
   <main>
-    <Container id="recovery" fluid className="py-3">
+    <Container id="recovery" fluid className="py-3 justify-content-center">
       <Row>
         <Col>
           <h1>How to Recover a Lost Item</h1>
