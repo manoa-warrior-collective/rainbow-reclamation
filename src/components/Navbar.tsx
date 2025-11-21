@@ -9,7 +9,7 @@ import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap
 
 // Test NavBar component
 const NavBar: React.FC = () => {
- const { data: session } = useSession();
+  const { data: session } = useSession();
   const currentUser = session?.user?.email;
   const userWithRole = session?.user as { email: string; randomKey: string };
   const role = userWithRole?.randomKey;
@@ -25,8 +25,7 @@ const NavBar: React.FC = () => {
               <Nav.Link id="admin-nav" href="/admin" key="admin" active={pathName === '/admin'}>
                 Admin
               </Nav.Link>
-            ) : (
-              ''
+            ) : null}
             {currentUser && (
               <>
                 <Nav.Link id="dashboard-nav" href="/dashboard" key="dashboard" active={pathName === '/dashboard'}>
