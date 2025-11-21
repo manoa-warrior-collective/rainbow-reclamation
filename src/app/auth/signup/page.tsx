@@ -97,7 +97,7 @@ export default function SignupPage() {
   return (
     <div style={pageStyle}>
       <form style={cardStyle} onSubmit={handleSubmit}>
-        {/* Logo + Title */}
+        {/* Logo + Titles */}
         <div
           style={{
             display: 'flex',
