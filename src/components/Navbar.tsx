@@ -9,8 +9,10 @@ import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap
 
 // Test NavBar component
 const NavBar: React.FC = () => {
-  const { data: session } = useSession();
+ const { data: session } = useSession();
   const currentUser = session?.user?.email;
+  const userWithRole = session?.user as { email: string; randomKey: string };
+  const role = userWithRole?.randomKey;
   const pathName = usePathname();
   return (
     <Navbar bg="light" expand="lg">
