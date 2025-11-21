@@ -6,7 +6,7 @@ export default function SignupPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
-  // Shared styles (TS-safe)
+  // Shared styles (TS-safes)
   const pageStyle: CSSProperties = {
     minHeight: '100vh',
     background: 'linear-gradient(180deg, #7585FF, #8FA0FF)',
