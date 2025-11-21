@@ -3,7 +3,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
 
@@ -11,11 +11,12 @@ import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
   const currentUser = session?.user?.email;
-  const userWithRole = session?.user as { email: string; randomKey: string };
-  const role = userWithRole?.randomKey;
-  const pathName = usePathname();
+  // const userWithRole = session?.user as { email: string; randomKey: string };
+  // const role = userWithRole?.randomKey;
+  // const pathName = usePathname();
+  // eslint-disable-next-line implicit-arrow-linebreak
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
         <Navbar.Brand href="/">Rainbow Reclamation</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -44,6 +45,35 @@ const NavBar: React.FC = () => {
                 </Nav.Link>
               </>
             )}
+            <Nav.Link id="home" href="" key="">
+              Homepage
+            </Nav.Link>
+            <Nav.Link id="create-listing" href="" key="">
+              Create Listing
+            </Nav.Link>
+            <Nav.Link id="retrieval" href="" key="">
+              Retrieval
+            </Nav.Link>
+            <Nav.Link id="about" href="" key="">
+              About
+            </Nav.Link>
+             {/* {currentUser
+              ? [
+                  <Nav.Link id="add-stuff-nav" href="/add" key="add" active={pathName === '/add'}>
+                    Add Stuff
+                  </Nav.Link>,
+                  <Nav.Link id="list-stuff-nav" href="/list" key="list" active={pathName === '/list'}>
+                    List Stuff
+                  </Nav.Link>,
+                ]
+              : ''}
+            {currentUser && role === 'ADMIN' ? (
+              <Nav.Link id="admin-home" href="/admin" key="admin" active={pathName === '/admin'}>
+                Admin
+              </Nav.Link>
+            ) : (
+              ''
+            )} */}
           </Nav>
           <Nav>
             {session ? (
@@ -75,5 +105,4 @@ const NavBar: React.FC = () => {
     </Navbar>
   );
 };
-
 export default NavBar;
