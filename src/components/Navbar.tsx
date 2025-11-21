@@ -24,10 +24,10 @@ const NavBar: React.FC = () => {
                   My Dashboard
                 </Nav.Link>
                 <Nav.Link
-                  id="report-item-nav"
-                  href="/report-item"
-                  key="report-item"
-                  active={pathName === '/report-item'}
+                  id="browse-items-nav"
+                  href="/browse-items"
+                  key="browse-items"
+                  active={pathName === '/browse-items'}
                 >
                   Browse Items
                 </Nav.Link>
