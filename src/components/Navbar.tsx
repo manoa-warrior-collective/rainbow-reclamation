@@ -10,8 +10,6 @@ import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
   const currentUser = session?.user?.email;
-  const userWithRole = session?.user as { email: string; randomKey: string };
-  const role = userWithRole?.randomKey;
   const pathName = usePathname();
   return (
     <Navbar bg="light" expand="lg">
@@ -26,6 +24,20 @@ const NavBar: React.FC = () => {
               </Nav.Link>
             ) : (
               ''
+            {currentUser && (
+              <>
+                <Nav.Link id="dashboard-nav" href="/dashboard" key="dashboard" active={pathName === '/dashboard'}>
+                  My Dashboard
+                </Nav.Link>
+                <Nav.Link
+                  id="browse-items-nav"
+                  href="/browse-items"
+                  key="browse-items"
+                  active={pathName === '/browse-items'}
+                >
+                  Browse Items
+                </Nav.Link>
+              </>
             )}
           </Nav>
           <Nav>
