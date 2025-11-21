@@ -1,111 +1,117 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
-import { createUser } from '@/lib/dbActions';
+import React, { useState, CSSProperties } from 'react';
 
-type SignUpForm = {
-  email: string;
-  password: string;
-  confirmPassword: string;
-  // acceptTerms: boolean;
-};
+export default function SignupPage() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
-/** The sign up page. */
-const SignUp = () => {
-  const validationSchema = Yup.object().shape({
-    email: Yup.string().required('Email is required').email('Email is invalid'),
-    password: Yup.string()
-      .required('Password is required')
-      .min(6, 'Password must be at least 6 characters')
-      .max(40, 'Password must not exceed 40 characters'),
-    confirmPassword: Yup.string()
-      .required('Confirm Password is required')
-      .oneOf([Yup.ref('password'), ''], 'Confirm Password does not match'),
-  });
+  // Shared styles (TS-safes)
+  const pageStyle: CSSProperties = {
+    minHeight: '100vh',
+    background: 'linear-gradient(180deg, #7585FF, #8FA0FF)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontFamily: 'Inter, sans-serif',
+    padding: '20px',
+  };
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<SignUpForm>({
-    resolver: yupResolver(validationSchema),
-  });
+  const cardStyle: CSSProperties = {
+    width: '380px',
+    background: 'rgba(255,255,255,0.15)',
+    backdropFilter: 'blur(16px)',
+    borderRadius: '22px',
+    padding: '35px',
+    boxShadow: '0 8px 25px rgba(0,0,0,0.12)',
+    textAlign: 'center',
+    color: 'white',
+  };
 
-  const onSubmit = async (data: SignUpForm) => {
-    // console.log(JSON.stringify(data, null, 2));
-    await createUser(data);
-    // After creating, signIn with redirect to the add page
-    await signIn('credentials', { callbackUrl: '/add', ...data });
+  const inputStyle: CSSProperties = {
+    width: '100%',
+    padding: '12px 14px',
+    borderRadius: '14px',
+    border: 'none',
+    marginTop: '12px',
+    outline: 'none',
+    fontSize: '15px',
+  };
+
+  const buttonStyle: CSSProperties = {
+    width: '100%',
+    background: 'white',
+    color: '#5A6BFF',
+    border: 'none',
+    padding: '12px 0',
+    borderRadius: '16px',
+    fontSize: '16px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    transition: '0.25s',
+    marginTop: '20px',
+  };
+
+  const switchTextStyle: CSSProperties = {
+    marginTop: '18px',
+    fontSize: '14px',
   };
 
   return (
-    <main>
-      <Container>
-        <Row className="justify-content-center">
-          <Col xs={5}>
-            <h1 className="text-center">Sign Up</h1>
-            <Card>
-              <Card.Body>
-                <Form onSubmit={handleSubmit(onSubmit)}>
-                  <Form.Group className="form-group">
-                    <Form.Label>Email</Form.Label>
-                    <input
-                      type="text"
-                      {...register('email')}
-                      className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-                    />
-                    <div className="invalid-feedback">{errors.email?.message}</div>
-                  </Form.Group>
+    <div style={pageStyle}>
+      <div style={cardStyle}>
+        {/* Logo + Title */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '8px',
+            marginBottom: '10px',
+          }}
+        >
+          <span style={{ fontSize: '28px' }}>🌈</span>
+          <h2 style={{ margin: 0, fontWeight: 700 }}>Rainbow Reclamation</h2>
+        </div>
 
-                  <Form.Group className="form-group">
-                    <Form.Label>Password</Form.Label>
-                    <input
-                      type="password"
-                      {...register('password')}
-                      className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-                    />
-                    <div className="invalid-feedback">{errors.password?.message}</div>
-                  </Form.Group>
-                  <Form.Group className="form-group">
-                    <Form.Label>Confirm Password</Form.Label>
-                    <input
-                      type="password"
-                      {...register('confirmPassword')}
-                      className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
-                    />
-                    <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
-                  </Form.Group>
-                  <Form.Group className="form-group py-3">
-                    <Row>
-                      <Col>
-                        <Button type="submit" className="btn btn-primary">
-                          Register
-                        </Button>
-                      </Col>
-                      <Col>
-                        <Button type="button" onClick={() => reset()} className="btn btn-warning float-right">
-                          Reset
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Form.Group>
-                </Form>
-              </Card.Body>
-              <Card.Footer>
-                Already have an account?
-                <a href="/auth/signin">Sign in</a>
-              </Card.Footer>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </main>
+        <h3 style={{ marginTop: '10px', marginBottom: '5px', fontSize: '24px' }}>
+          Create Account
+        </h3>
+
+        <p style={{ fontWeight: 300, marginBottom: '20px' }}>
+          Join Mānoa’s virtual lost & found.
+        </p>
+
+        {/* Full Name Input */}
+        <input
+          type="text"
+          placeholder="Full Name"
+          style={inputStyle}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
+        {/* Email Input */}
+        <input
+          type="email"
+          placeholder="Email"
+          style={inputStyle}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        {/* Sign Up Button */}
+        <button type="button" style={buttonStyle}>Sign Up</button>
+
+        {/* Login Link */}
+        <p style={switchTextStyle}>
+          Already have an account?
+          {' '}
+          <a href="/login" style={{ textDecoration: 'underline', color: 'white' }}>
+            Login
+          </a>
+        </p>
+      </div>
+    </div>
   );
-};
-
-export default SignUp;
+}
