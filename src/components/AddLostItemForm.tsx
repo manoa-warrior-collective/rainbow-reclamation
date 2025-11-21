@@ -11,7 +11,7 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddStuffSchema } from '@/lib/validationSchemas';
 
 const onSubmit = async (data: { name: string; quantity: number; owner: string; condition: string }) => {
-  // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
+  // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`)
   await addStuff(data);
   swal('Success', 'Your item has been added', 'success', {
     timer: 2000,
