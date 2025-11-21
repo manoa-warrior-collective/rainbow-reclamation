@@ -1,0 +1,12 @@
+name: M2 Issue
+description: Create an issue in Rainbow Reclamation.
+projects: "manoa-warrior-collective/5"
+body:
+  - type: textarea
+    attributes:
+      label: What is the issue?
+      description: Replace 'XX' with the issue number and fill out what needs to be accomplished for this task.
+      placeholder: What is the issue?
+      value: "Do all work for this task in a branch called issue-XX. "
+    validations:
+      required: true

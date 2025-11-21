@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
 
+// Test NavBar component
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
   const currentUser = session?.user?.email;
@@ -16,26 +17,32 @@ const NavBar: React.FC = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="/">Next.js Application Template</Navbar.Brand>
+        <Navbar.Brand href="/">Rainbow Reclamation</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
-            {currentUser
-              ? [
-                  <Nav.Link id="add-stuff-nav" href="/add" key="add" active={pathName === '/add'}>
-                    Add Stuff
-                  </Nav.Link>,
-                  <Nav.Link id="list-stuff-nav" href="/list" key="list" active={pathName === '/list'}>
-                    List Stuff
-                  </Nav.Link>,
-                ]
-              : ''}
+            <Nav.Link id="about" href="/about" active={pathName === '/about/about-page'}>
+              About
+            </Nav.Link>
             {currentUser && role === 'ADMIN' ? (
-              <Nav.Link id="admin-stuff-nav" href="/admin" key="admin" active={pathName === '/admin'}>
+              <Nav.Link id="admin-nav" href="/admin" key="admin" active={pathName === '/admin'}>
                 Admin
               </Nav.Link>
-            ) : (
-              ''
+            ) : null}
+            {currentUser && (
+              <>
+                <Nav.Link id="dashboard-nav" href="/dashboard" key="dashboard" active={pathName === '/dashboard'}>
+                  My Dashboard
+                </Nav.Link>
+                <Nav.Link
+                  id="browse-items-nav"
+                  href="/browse-items"
+                  key="browse-items"
+                  active={pathName === '/browse-items'}
+                >
+                  Browse Items
+                </Nav.Link>
+              </>
             )}
           </Nav>
           <Nav>
