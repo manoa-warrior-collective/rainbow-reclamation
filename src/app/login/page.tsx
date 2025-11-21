@@ -81,7 +81,7 @@ export default function LoginPage() {
           Welcome back! Let’s find what’s lost.
         </p>
 
-        {/* Email Input */}
+        {/* Email Inputs */}
         <input
           type="email"
           placeholder="Email"
