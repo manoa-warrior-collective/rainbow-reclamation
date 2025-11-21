@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-// src/app/page.tsx
 import { Col, Container, Row, Card } from 'react-bootstrap';
 import Link from 'next/link';
 
