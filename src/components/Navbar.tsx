@@ -7,9 +7,12 @@ import { usePathname } from 'next/navigation';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
 
+// Test NavBar component
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
   const currentUser = session?.user?.email;
+  const userWithRole = session?.user as { email: string; randomKey: string };
+  const role = userWithRole?.randomKey;
   const pathName = usePathname();
   return (
     <Navbar bg="light" expand="lg">
@@ -18,6 +21,11 @@ const NavBar: React.FC = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
+            {currentUser && role === 'ADMIN' ? (
+              <Nav.Link id="admin-nav" href="/admin" key="admin" active={pathName === '/admin'}>
+                Admin
+              </Nav.Link>
+            ) : null}
             {currentUser && (
               <>
                 <Nav.Link id="dashboard-nav" href="/dashboard" key="dashboard" active={pathName === '/dashboard'}>
