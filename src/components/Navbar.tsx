@@ -45,35 +45,6 @@ const NavBar: React.FC = () => {
                 </Nav.Link>
               </>
             )}
-            <Nav.Link id="home" href="" key="">
-              Homepage
-            </Nav.Link>
-            <Nav.Link id="create-listing" href="" key="">
-              Create Listing
-            </Nav.Link>
-            <Nav.Link id="retrieval" href="" key="">
-              Retrieval
-            </Nav.Link>
-            <Nav.Link id="about" href="" key="">
-              About
-            </Nav.Link>
-            {/* {currentUser
-              ? [
-                  <Nav.Link id="add-stuff-nav" href="/add" key="add" active={pathName === '/add'}>
-                    Add Stuff
-                  </Nav.Link>,
-                  <Nav.Link id="list-stuff-nav" href="/list" key="list" active={pathName === '/list'}>
-                    List Stuff
-                  </Nav.Link>,
-                ]
-              : ''}
-            {currentUser && role === 'ADMIN' ? (
-              <Nav.Link id="admin-home" href="/admin" key="admin" active={pathName === '/admin'}>
-                Admin
-              </Nav.Link>
-            ) : (
-              ''
-            )} */}
           </Nav>
           <Nav>
             {session ? (
