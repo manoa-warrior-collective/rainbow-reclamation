@@ -1,10 +1,46 @@
 'use client';
 
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import React, { useState, CSSProperties } from 'react';
+import { createUser } from '@/lib/dbActions';
 
 export default function SignupPage() {
-  const [name, setName] = useState('');
+  const router = useRouter();
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+
+    const trimmedEmail = email.trim().toLowerCase();
+
+    try {
+      await createUser({ email: trimmedEmail, password });
+      const result = await signIn('credentials', {
+        callbackUrl: '/list',
+        email: trimmedEmail,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError('Account created, but signing in failed. Please try logging in.');
+        return;
+      }
+
+      router.push('/list');
+    } catch (err) {
+      console.error('Sign up failed', err);
+      setError('Unable to create account. Please try a different email or try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // Shared styles (TS-safes)
   const pageStyle: CSSProperties = {
@@ -50,6 +86,7 @@ export default function SignupPage() {
     cursor: 'pointer',
     transition: '0.25s',
     marginTop: '20px',
+    opacity: isSubmitting ? 0.7 : 1,
   };
 
   const switchTextStyle: CSSProperties = {
@@ -59,7 +96,7 @@ export default function SignupPage() {
 
   return (
     <div style={pageStyle}>
-      <div style={cardStyle}>
+      <form style={cardStyle} onSubmit={handleSubmit}>
         {/* Logo + Title */}
         <div
           style={{
@@ -82,36 +119,49 @@ export default function SignupPage() {
           Join Mānoa’s virtual lost & found.
         </p>
 
-        {/* Full Name Input */}
-        <input
-          type="text"
-          placeholder="Full Name"
-          style={inputStyle}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-
         {/* Email Input */}
         <input
           type="email"
+          name="email"
           placeholder="Email"
           style={inputStyle}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
 
+        {/* Password Input */}
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          style={inputStyle}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          minLength={6}
+          required
+        />
+
+        {error && (
+          <p style={{ marginTop: '12px', color: '#FFE4E4', fontSize: '14px' }}>
+            {error}
+          </p>
+        )}
+
         {/* Sign Up Button */}
-        <button type="button" style={buttonStyle}>Sign Up</button>
+        <button type="submit" style={buttonStyle} disabled={isSubmitting}>
+          {isSubmitting ? 'Creating account…' : 'Sign Up'}
+        </button>
 
         {/* Login Link */}
         <p style={switchTextStyle}>
           Already have an account?
           {' '}
-          <a href="/login" style={{ textDecoration: 'underline', color: 'white' }}>
+          <a href="/auth/signin" style={{ textDecoration: 'underline', color: 'white' }}>
             Login
           </a>
         </p>
-      </div>
+      </form>
     </div>
   );
 }
