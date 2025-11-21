@@ -3,7 +3,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-// import { usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
 
@@ -11,9 +11,9 @@ import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
   const currentUser = session?.user?.email;
-  // const userWithRole = session?.user as { email: string; randomKey: string };
-  // const role = userWithRole?.randomKey;
-  // const pathName = usePathname();
+  const userWithRole = session?.user as { email: string; randomKey: string };
+  const role = userWithRole?.randomKey;
+  const pathName = usePathname();
   // eslint-disable-next-line implicit-arrow-linebreak
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -57,7 +57,7 @@ const NavBar: React.FC = () => {
             <Nav.Link id="about" href="" key="">
               About
             </Nav.Link>
-             {/* {currentUser
+            {/* {currentUser
               ? [
                   <Nav.Link id="add-stuff-nav" href="/add" key="add" active={pathName === '/add'}>
                     Add Stuff
