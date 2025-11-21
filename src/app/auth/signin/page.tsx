@@ -1,9 +1,37 @@
 'use client';
 
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import React, { useState, CSSProperties } from 'react';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+
+    const result = await signIn('credentials', {
+      callbackUrl: '/list',
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      setError('Sign in failed. Check your details and try again.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    setIsSubmitting(false);
+    router.push('/list');
+  };
 
   // Styles with TypeScript-safe typing
   const pageStyle: CSSProperties = {
@@ -49,6 +77,7 @@ export default function LoginPage() {
     cursor: 'pointer',
     transition: '0.25s',
     marginTop: '20px',
+    opacity: isSubmitting ? 0.7 : 1,
   };
 
   const switchTextStyle: CSSProperties = {
@@ -58,7 +87,7 @@ export default function LoginPage() {
 
   return (
     <div style={pageStyle}>
-      <div style={cardStyle}>
+      <form style={cardStyle} onSubmit={handleSubmit}>
         {/* Logo + Title */}
         <div
           style={{
@@ -81,17 +110,42 @@ export default function LoginPage() {
           Welcome back! Let’s find what’s lost.
         </p>
 
-        {/* Email Inputs */}
+        {/* Email Input */}
         <input
           type="email"
+          name="email"
           placeholder="Email"
           style={inputStyle}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
 
+        {/* Password Input */}
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          style={inputStyle}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+
+        {error && (
+          <p style={{ marginTop: '12px', color: '#FFE4E4', fontSize: '14px' }}>
+            {error}
+          </p>
+        )}
+
         {/* Button */}
-        <button type="button" style={buttonStyle}>Login</button>
+        <button
+          type="submit"
+          style={buttonStyle}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Signing in…' : 'Login'}
+        </button>
 
         {/* Switch page */}
         <p style={switchTextStyle}>
@@ -101,7 +155,7 @@ export default function LoginPage() {
             Sign up
           </a>
         </p>
-      </div>
+      </form>
     </div>
   );
 }
