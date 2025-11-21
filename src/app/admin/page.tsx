@@ -1,44 +1,47 @@
 import { getServerSession } from 'next-auth';
 import { Col, Container, Row, Table } from 'react-bootstrap';
+import StuffItemAdmin from '@/components/StuffItemAdmin';
 import { prisma } from '@/lib/prisma';
+import { adminProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
-import StatsGrid from '@/components/StatsGrid';
-import AdminActionCards from '@/components/AdminActionCards';
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
-
-  // Temporarily show session info for debugging
-  console.log('Session:', session);
-
+  adminProtectedPage(
+    session as {
+      user: { email: string; id: string; randomKey: string };
+    } | null,
+  );
+  const stuff = await prisma.stuff.findMany({});
   const users = await prisma.user.findMany({});
-  const registeredUsers = await prisma.user.count();
-
-  // Mockup data for stats that don't exist yet in your schema
-  const stats = {
-    activeListings: 42,
-    registeredUsers,
-    successfulMatches: 23,
-    pendingVerification: 8,
-  };
 
   return (
     <main>
-      <header className="admin-header">
-        <Container>
-          <h1>🛡️ Admin Dashboard - Rainbow Reclamation</h1>
-        </Container>
-      </header>
-
-      <Container className="py-4">
-        <StatsGrid stats={stats} />
-        <AdminActionCards />
-      </Container>
-
       <Container id="list" fluid className="py-3">
         <Row>
           <Col>
-            <h2>List Users</h2>
+            <h1>List Stuff Admin</h1>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Quantity</th>
+                  <th>Condition</th>
+                  <th>Owner</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {stuff.map((item) => (
+                  <StuffItemAdmin key={item.id} {...item} />
+                ))}
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h1>List Users Admin</h1>
             <Table striped bordered hover>
               <thead>
                 <tr>
