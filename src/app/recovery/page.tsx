@@ -1,6 +1,6 @@
 import { Col, Container, Row } from 'react-bootstrap';
 
-/** Render a list of stuff for the logged in user. */
+/** Render a list of stuff for the logged in user */
 const RecoveryPage = async () => (
   <main>
     <Container id="recovery" fluid className="py-3">
