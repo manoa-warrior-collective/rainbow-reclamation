@@ -1,4 +1,5 @@
-/* eslint-disable max-len */
+'use client';
+
 import { Col, Container, Row, Card } from 'react-bootstrap';
 import Link from 'next/link';
 
