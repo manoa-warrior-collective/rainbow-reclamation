@@ -36,6 +36,35 @@ enum Condition {
   poor
 }
 
+model Item {
+  id 
+  name
+  status
+  bounty_status
+  bounty_reward
+}
+
+enum Category {
+  other
+  electronics
+  clothing
+  accessories
+  daily_necessities
+}
+
+enum Location {
+  building
+  description
+}
+
+enum Building {
+  bil
+  kell
+  post
+  campus center
+  other
+}
+
 model Stuff {
   id        Int       @id @default(autoincrement())
   name      String
