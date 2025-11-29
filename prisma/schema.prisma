@@ -43,3 +43,33 @@ model Stuff {
   condition Condition @default(good)
   owner     String
 }
+
+model Item {
+  id            Int     @id @default(autoincrement())
+  name          String
+  is_found      boolean
+  is_bounty     boolean 
+  bounty_reward Int
+  category      Category @default(Other)
+}
+
+enum Category {
+  Other
+  Electronics
+  Clothing
+  Accessories
+  Daily_Necessities
+}
+
+enum Location {
+  building    Building
+  description String
+}
+
+enum Building {
+  BIL
+  KELL
+  POST
+  Campus Center
+  Other
+}
