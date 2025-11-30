@@ -1,9 +1,27 @@
-'use client';
-
 import { Container, Row, Col, Card, Button, Table, Badge } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
+import { getServerSession } from 'next-auth';
+import { prisma } from '@/lib/prisma';
+// import StuffItem from '@/components/StuffItem';
+import { loggedInProtectedPage } from '@/lib/page-protection';
+import authOptions from '@/lib/authOptions';
 
-const UserDashboard = () => {
+const UserDashboard = async () => {
+  // Protect the page, only logged in users can access it.
+  const session = await getServerSession(authOptions);
+  loggedInProtectedPage(
+    session as {
+      user: { email: string; id: string; randomKey: string };
+      // eslint-disable-next-line @typescript-eslint/comma-dangle
+    } | null,
+  );
+  const owner = (session && session.user && session.user.email) || '';
+  const item = await prisma.stuff.findMany({
+    where: {
+      owner,
+    },
+  });
+
   const router = useRouter();
 
   // Mockup data for user's lost items
