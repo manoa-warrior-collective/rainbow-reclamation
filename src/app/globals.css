@@ -16,7 +16,7 @@ body {
 
 /* Navbar dark styling */
 nav.navbar {
-  background-color: #212529 !important;
+  background-color: #2c2c2c !important;
   color: white !important;
 }
 
@@ -28,9 +28,27 @@ nav.navbar a:hover {
   color: white !important;
 }
 
+/* Navbar dropdown styling */
+.navbar .dropdown-menu {
+  background-color: #2c2c2c !important;
+}
+
+.navbar .dropdown-item {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.navbar .dropdown-item:hover {
+  background-color: #404040 !important;
+  color: white !important;
+}
+
+.navbar .dropdown-toggle {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
 /* Footer dark styling */
 footer {
-  background-color: #212529 !important;
+  background-color: #2c2c2c !important;
   color: white !important;
 }
 
