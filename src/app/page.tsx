@@ -72,7 +72,7 @@ const Home = () => (
     </Container>
 
     {/* Recent Listings */}
-    <Container className="recent-listings py-5 bg-light">
+    <Container className="recent-listings py-5">
       <h2 className="text-center mb-5">Latest Listings</h2>
       <Row>
         <Col md={6} lg={3} className="mb-4">
@@ -80,7 +80,7 @@ const Home = () => (
             <Card.Body>
               <span className="badge bg-success mb-2">FOUND</span>
               <Card.Title>UH Student ID</Card.Title>
-              <Card.Text className="text-muted">Found near Campus Center • 2 hours ago</Card.Text>
+              <Card.Text>Found near Campus Center • 2 hours ago</Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -89,7 +89,7 @@ const Home = () => (
             <Card.Body>
               <span className="badge bg-warning mb-2">MISSING</span>
               <Card.Title>Black Laptop Charger</Card.Title>
-              <Card.Text className="text-muted">Last seen in Hamilton Library • 4 hours ago</Card.Text>
+              <Card.Text>Last seen in Hamilton Library • 4 hours ago</Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -98,7 +98,7 @@ const Home = () => (
             <Card.Body>
               <span className="badge bg-success mb-2">FOUND</span>
               <Card.Title>Blue Water Bottle</Card.Title>
-              <Card.Text className="text-muted">Found in Keller Hall • 1 day ago</Card.Text>
+              <Card.Text>Found in Keller Hall • 1 day ago</Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -107,7 +107,7 @@ const Home = () => (
             <Card.Body>
               <span className="badge bg-warning mb-2">MISSING</span>
               <Card.Title>Car Keys with Rainbow Keychain</Card.Title>
-              <Card.Text className="text-muted">Last seen near Parking Structure • 2 days ago</Card.Text>
+              <Card.Text>Last seen near Parking Structure • 2 days ago</Card.Text>
             </Card.Body>
           </Card>
         </Col>
