@@ -32,7 +32,7 @@ const Home = () => (
     {/* Features Section */}
     <Container className="features py-5">
       <h2 className="text-center mb-5">How It Works</h2>
-      <Row>
+      <Row className="justify-content-center">
         <Col md={6} lg={3} className="mb-4">
           <Card className="h-100 text-center">
             <Card.Body>
