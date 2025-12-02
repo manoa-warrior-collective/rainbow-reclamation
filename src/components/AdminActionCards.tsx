@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { Row, Col, Button } from 'react-bootstrap';
-import { FileText, CheckCircle, BarChart, People } from 'react-bootstrap-icons';
+import { FileText, BarChart, People } from 'react-bootstrap-icons';
 
 const AdminActionCards: React.FC = () => {
   const router = useRouter();
