@@ -3,8 +3,11 @@
 'use client';
 
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { useRouter } from 'next/navigation';
 
 const BrowseItemsPage = () => {
+  const router = useRouter();
+
   // Mock items data
   const items = [
     {
@@ -36,9 +39,13 @@ const BrowseItemsPage = () => {
     },
   ];
 
+  const handleClaimItem = () => {
+    router.push('/recovery');
+  };
+
   return (
     <main>
-      <Container className="py-4">
+      <Container className="py-4 mt-4">
         <Row>
           <Col>
             <h1 className="mb-4">Browse Items</h1>
@@ -59,7 +66,9 @@ const BrowseItemsPage = () => {
                   <div className="mb-3">
                     <strong>Date Found:</strong> {item.date}
                   </div>
-                  <Button variant="primary">Claim Item</Button>
+                  <Button variant="primary" onClick={handleClaimItem}>
+                    Claim Item
+                  </Button>
                 </Card.Body>
               </Card>
             </Col>
