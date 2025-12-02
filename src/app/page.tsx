@@ -68,17 +68,6 @@ const Home = () => (
             </Card.Body>
           </Card>
         </Col>
-        <Col md={6} lg={3} className="mb-4">
-          <Card className="h-100 text-center">
-            <Card.Body>
-              <div className="fs-1 mb-3">👤</div>
-              <Card.Title>Student Profile</Card.Title>
-              <Card.Text>
-                Manage your account with basic student info including your name and department for secure item recovery.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
       </Row>
     </Container>
 
