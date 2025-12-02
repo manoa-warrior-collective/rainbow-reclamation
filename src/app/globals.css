@@ -14,6 +14,44 @@ body {
   flex-direction: column;
 }
 
+/* Navbar dark styling */
+nav.navbar {
+  background-color: #212529 !important;
+  color: white !important;
+}
+
+nav.navbar a {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+nav.navbar a:hover {
+  color: white !important;
+}
+
+/* Footer dark styling */
+footer {
+  background-color: #212529 !important;
+  color: white !important;
+}
+
+footer h3 {
+  color: white;
+}
+
+footer p {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+footer a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
 /* Page styles */
 .page-style {
   min-height: 100vh;
