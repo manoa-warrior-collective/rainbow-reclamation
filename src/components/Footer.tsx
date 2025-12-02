@@ -4,32 +4,41 @@ import { Col, Container, Row } from 'react-bootstrap';
 const Footer = () => (
   <footer className="mt-auto py-3">
     <Container>
-      <div className="text-center">
-        <h2>Locations</h2>
-        <h3>Retrieval Offices</h3>
-        <Row>
-          <Col>
-            <h4>Office</h4>
-            <p>ICS Admin Office</p>
+      <Row>
+        <Col md={4}>
+          <h3>LOCATIONS</h3>
+          <p>
+            <strong>ICS Admin Office</strong>
             <br />
-            <p>QLCSS</p>
-          </Col>
-          <Col>
-            <h4>Hours</h4>
-            <p>8:00 AM - 4:00 PM</p>
-            <p>8:00 AM - 4:00 PM</p>
-          </Col>
-          <Col>
-            <h4>Days</h4>
-            <p>Monday - Friday</p>
+            8:00 AM - 4:00 PM
             <br />
-            <p>Monday - Friday</p>
-          </Col>
-        </Row>
-        <h3>Contact</h3>
-        <p>Phone: (555) 555-5555</p>
-        <p>Email: john@foo.com</p>
-      </div>
+            Monday - Friday
+          </p>
+          <p>
+            <strong>QLCSS</strong>
+            <br />
+            8:00 AM - 4:00 PM
+            <br />
+            Monday - Friday
+          </p>
+        </Col>
+        <Col md={4}>
+          <h3>RETRIEVAL OFFICES</h3>
+          <p>
+            ICS Admin Office
+            <br />
+            QLCSS
+          </p>
+        </Col>
+        <Col md={4}>
+          <h3>CONTACT</h3>
+          <p>
+            Phone: (555) 555-5555
+            <br />
+            Email: john@foo.com
+          </p>
+        </Col>
+      </Row>
     </Container>
   </footer>
 );
