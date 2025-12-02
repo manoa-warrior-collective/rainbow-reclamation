@@ -1,13 +1,28 @@
-'use client';
+import { Container, Row, Col, Table, Badge } from 'react-bootstrap';
+import { getServerSession } from 'next-auth';
+import { prisma } from '@/lib/prisma';
+// import StuffItem from '@/components/StuffItem';
+import { loggedInProtectedPage } from '@/lib/page-protection';
+import authOptions from '@/lib/authOptions';
 
-import { Container, Row, Col, Card, Button, Table, Badge } from 'react-bootstrap';
-import { useRouter } from 'next/navigation';
-
-const UserDashboard = () => {
-  const router = useRouter();
+const UserDashboard = async () => {
+  // Protect the page, only logged in users can access it.
+  const session = await getServerSession(authOptions);
+  loggedInProtectedPage(
+    session as {
+      user: { email: string; id: string; randomKey: string };
+      // eslint-disable-next-line @typescript-eslint/comma-dangle
+    } | null,
+  );
+  const owner = (session && session.user && session.user.email) || '';
+  const items = await prisma.stuff.findMany({
+    where: {
+      owner,
+    },
+  });
 
   // Mockup data for user's lost items
-  const myLostItems = [
+  /* const myLostItems = [
     {
       id: 1,
       title: 'Red Umbrella',
@@ -36,7 +51,7 @@ const UserDashboard = () => {
       dateFound: '2024-01-12',
       status: 'Pending',
     },
-  ];
+  ]; */
 
   return (
     <main>
@@ -44,21 +59,6 @@ const UserDashboard = () => {
         <Row className="mb-4">
           <Col>
             <h1>My Dashboard</h1>
-          </Col>
-        </Row>
-
-        {/* Quick Action Cards */}
-        <Row className="mb-4">
-          <Col md={6} className="mb-3">
-            <Card className="h-100">
-              <Card.Body>
-                <Card.Title>Browse Items</Card.Title>
-                <Card.Text>Check if your lost item has been found or browse all items.</Card.Text>
-                <Button variant="primary" onClick={() => router.push('/browse-items')}>
-                  Browse Items
-                </Button>
-              </Card.Body>
-            </Card>
           </Col>
         </Row>
 
@@ -77,9 +77,9 @@ const UserDashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {myLostItems.map((item) => (
+                {items.map((item) => (
                   <tr key={item.id}>
-                    <td>{item.title}</td>
+                    <td>{item.name}</td>
                     <td>{item.category}</td>
                     <td>{item.location}</td>
                     <td>{item.dateLost}</td>
@@ -96,7 +96,7 @@ const UserDashboard = () => {
         {/* My Found Item Reports */}
         <Row>
           <Col>
-            <h2>Items I Found</h2>
+            <h2>Items Found</h2>
             <Table striped bordered hover>
               <thead>
                 <tr>
