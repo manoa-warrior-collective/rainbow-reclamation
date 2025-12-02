@@ -1,14 +1,23 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import { Col, Container, Row, Card } from 'react-bootstrap';
 
-/** Render instructions for recovering a lost item */
-const RecoveryPage = async () => (
+'use client';
+
+import { Col, Container, Row } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
+
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+const RecoveryPage = ({ params }: PageProps) => (
   <main>
     <Container id="recovery" className="py-4 mt-4">
       <Row className="mb-4">
         <Col>
-          <h1>How to Recover Your Lost Item</h1>
-          <p className="lead">Follow these steps to claim your item from our Lost & Found offices.</p>
+          <h1>How to Recover Item #{params.id}</h1>
+          <p className="lead">Follow these steps to claim the item you selected from the Lost & Found.</p>
         </Col>
       </Row>
 
@@ -54,7 +63,7 @@ const RecoveryPage = async () => (
               <ul>
                 <li>Items are held for 30 days before being donated or disposed of</li>
                 <li>High-value items (electronics, jewelry) require additional verification</li>
-                <li>If someone else is picking up your item, they must have written authorization from you</li>
+                <li>If someone else is picking up your item, they must have written authorization</li>
                 <li>Perishable items are held for 48 hours only</li>
               </ul>
             </Card.Body>
@@ -68,13 +77,13 @@ const RecoveryPage = async () => (
               <hr />
               <div className="mb-3">
                 <h5>ICS Admin Office</h5>
-                <p className="mb-1">Monday - Friday</p>
-                <p className="mb-0">8:00 AM - 4:00 PM</p>
+                <p className="mb-1">Monday – Friday</p>
+                <p className="mb-0">8:00 AM – 4:00 PM</p>
               </div>
               <div>
                 <h5>QLCSS</h5>
-                <p className="mb-1">Monday - Friday</p>
-                <p className="mb-0">8:00 AM - 4:00 PM</p>
+                <p className="mb-1">Monday – Friday</p>
+                <p className="mb-0">8:00 AM – 4:00 PM</p>
               </div>
             </Card.Body>
           </Card>

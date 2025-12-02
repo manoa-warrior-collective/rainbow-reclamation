@@ -2,7 +2,8 @@
 
 'use client';
 
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
 import { useRouter } from 'next/navigation';
 
 const BrowseItemsPage = () => {
@@ -39,8 +40,8 @@ const BrowseItemsPage = () => {
     },
   ];
 
-  const handleClaimItem = () => {
-    router.push('/recovery');
+  const handleClaimItem = (id: number) => {
+    router.push(`/recovery/${id}`);
   };
 
   return (
@@ -66,7 +67,7 @@ const BrowseItemsPage = () => {
                   <div className="mb-3">
                     <strong>Date Found:</strong> {item.date}
                   </div>
-                  <Button variant="primary" onClick={handleClaimItem}>
+                  <Button variant="primary" onClick={() => handleClaimItem(item.id)}>
                     Claim Item
                   </Button>
                 </Card.Body>
