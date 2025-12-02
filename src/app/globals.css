@@ -59,6 +59,10 @@ footer h3 {
   color: white;
 }
 
+footer h4 {
+  color: white;
+}
+
 footer p {
   color: rgba(255, 255, 255, 0.85);
 }
@@ -71,6 +75,52 @@ footer a {
 footer a:hover {
   color: white;
   text-decoration: underline;
+}
+
+/* Dark cards/boxes for content */
+.card,
+.container > div,
+main .container {
+  background-color: #2c2c2c !important;
+  color: white !important;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Bootstrap card overrides */
+.card {
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-title,
+.card-text,
+.card h1,
+.card h2,
+.card h3,
+.card h4,
+.card h5,
+.card h6 {
+  color: white !important;
+}
+
+/* General text color overrides for content areas */
+main {
+  color: white;
+}
+
+main h1,
+main h2,
+main h3,
+main h4,
+main h5,
+main h6 {
+  color: white;
+}
+
+main p {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* Page styles */
