@@ -40,7 +40,7 @@ const UserDashboard = () => {
 
   return (
     <main>
-      <Container className="py-4">
+      <Container className="py-4 mt-4">
         <Row className="mb-4">
           <Col>
             <h1>My Dashboard</h1>
