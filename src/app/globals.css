@@ -98,6 +98,16 @@ footer a:hover {
   color: rgba(255, 255, 255, 0.85) !important;
 }
 
+/* Card subtitle styling */
+.card-subtitle {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Text muted override for dark backgrounds */
+.text-muted {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
 /* Table styling - dark gray */
 .table {
   background-color: #2c2c2c !important;
@@ -134,6 +144,11 @@ main h1,
 main h2,
 main h3 {
   color: white !important;
+}
+
+/* Main content paragraphs */
+main p {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* Container sections */
