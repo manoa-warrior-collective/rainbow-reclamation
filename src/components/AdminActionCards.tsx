@@ -11,10 +11,6 @@ const AdminActionCards: React.FC = () => {
     router.push('/admin/create-posting');
   };
 
-  const handleReviewQueue = () => {
-    router.push('/admin/review-queue');
-  };
-
   const handleViewReports = () => {
     router.push('/admin/analytics');
   };
@@ -36,19 +32,6 @@ const AdminActionCards: React.FC = () => {
           <p>Add new found items from the official Mānoa Lost & Found</p>
           <Button className="btn" onClick={handleNewPosting}>
             New Posting
-          </Button>
-        </div>
-      </Col>
-
-      <Col xs={12} md={6} className="mb-3">
-        <div className="action-card">
-          <h3>
-            <CheckCircle className="me-2" />
-            Verify Submissions
-          </h3>
-          <p>Review and approve user-submitted found items</p>
-          <Button className="btn" onClick={handleReviewQueue}>
-            Review Queue
           </Button>
         </div>
       </Col>
