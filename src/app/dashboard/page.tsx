@@ -1,7 +1,6 @@
 import { Container, Row, Col, Table, Badge } from 'react-bootstrap';
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
-// import StuffItem from '@/components/StuffItem';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 
@@ -21,37 +20,8 @@ const UserDashboard = async () => {
     },
   });
 
-  // Mockup data for user's lost items
-  /* const myLostItems = [
-    {
-      id: 1,
-      title: 'Red Umbrella',
-      category: 'Accessories',
-      location: 'Hamilton Library',
-      dateLost: '2024-01-10',
-      status: 'Active',
-    },
-    {
-      id: 2,
-      title: 'Laptop Charger',
-      category: 'Electronics',
-      location: 'Campus Center',
-      dateLost: '2024-01-08',
-      status: 'Matched',
-    },
-  ];
-
-  // Mock data for user's found item reports
-  const myFoundItems = [
-    {
-      id: 1,
-      title: 'Blue Water Bottle',
-      category: 'Accessories',
-      location: 'Keller Hall',
-      dateFound: '2024-01-12',
-      status: 'Pending',
-    },
-  ]; */
+  const myLostItems = items.filter((lostItem) => lostItem.is_found === false);
+  const myFoundItems = items.filter((lostItem) => lostItem.is_found === true);
 
   return (
     <main>
@@ -61,8 +31,6 @@ const UserDashboard = async () => {
             <h1>My Dashboard</h1>
           </Col>
         </Row>
-
-        {/* My Lost Items */}
         <Row className="mb-4">
           <Col>
             <h2>My Lost Items</h2>
@@ -72,18 +40,17 @@ const UserDashboard = async () => {
                   <th>Item</th>
                   <th>Category</th>
                   <th>Last Seen</th>
-                  <th>Date Lost</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {myLostItems.map((item) => (
                   <tr key={item.id}>
                     <td>{item.name}</td>
                     <td>{item.category}</td>
-                    <td>{item.location}</td>
+                    <td>{item.last_seen}</td>
                     <td>
-                      <Badge bg={item.status === 'Matched' ? 'success' : 'warning'}>{item.status}</Badge>
+                      <Badge>Not Found</Badge>
                     </td>
                   </tr>
                 ))}
@@ -91,8 +58,6 @@ const UserDashboard = async () => {
             </Table>
           </Col>
         </Row>
-
-        {/* My Found Item Reports */}
         <Row>
           <Col>
             <h2>Items Found</h2>
@@ -101,20 +66,16 @@ const UserDashboard = async () => {
                 <tr>
                   <th>Item</th>
                   <th>Category</th>
-                  <th>Location Found</th>
-                  <th>Date Found</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 {myFoundItems.map((item) => (
                   <tr key={item.id}>
-                    <td>{item.title}</td>
+                    <td>{item.name}</td>
                     <td>{item.category}</td>
-                    <td>{item.location}</td>
-                    <td>{item.dateFound}</td>
                     <td>
-                      <Badge bg="info">{item.status}</Badge>
+                      <Badge>Found</Badge>
                     </td>
                   </tr>
                 ))}
