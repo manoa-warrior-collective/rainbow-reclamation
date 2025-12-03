@@ -41,7 +41,7 @@ const BrowseItemsPage = () => {
     <main>
       <Container className="py-4">
         <Row>
-          <Col>
+          <Col className="justify-content-start">
             <h1 className="mb-4">Browse Items</h1>
             <p className="text-muted">Found items reported on campus</p>
           </Col>
