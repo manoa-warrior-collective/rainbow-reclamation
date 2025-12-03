@@ -2,7 +2,8 @@
 
 'use client';
 
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Dropdown } from 'react-bootstrap';
+import { FilterRight } from 'react-bootstrap-icons';
 
 const BrowseItemsPage = () => {
   // Mock items data
@@ -40,9 +41,20 @@ const BrowseItemsPage = () => {
     <main>
       <Container className="py-4">
         <Row>
-          <Col>
+          <Col className="justify-content-start">
             <h1 className="mb-4">Browse Items</h1>
             <p className="text-muted">Found items reported on campus</p>
+          </Col>
+          <Col className="justify-content-end">
+            <Dropdown>
+              <Dropdown.Toggle variant="dark">
+                <FilterRight />
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item>Location</Dropdown.Item>
+                <Dropdown.Item>Category</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </Col>
         </Row>
         <Row>
