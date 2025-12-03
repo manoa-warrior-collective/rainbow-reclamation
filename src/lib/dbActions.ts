@@ -1,6 +1,6 @@
 'use server';
 
-import { Stuff, Condition } from '@prisma/client';
+import { Stuff, Condition, Item } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -92,3 +92,134 @@ export async function changePassword(credentials: { email: string; password: str
     },
   });
 }
+
+export async function addItem(item: {
+  name: string;
+  description: string;
+  category: string;
+  status: string;
+  building: string;
+  location: string;
+  date: Date;
+  imageUrl?: string;
+  contactInfo: string;
+  reportedBy: string;
+  bountyStatus: boolean;
+  bountyReward?: number;
+}) {
+  await prisma.item.create({
+    data: {
+      name: item.name,
+      description: item.description,
+      category: item.category as any,
+      status: item.status as any,
+      building: item.building as any,
+      location: item.location,
+      date: item.date,
+      imageUrl: item.imageUrl,
+      contactInfo: item.contactInfo,
+      reportedBy: item.reportedBy,
+      bountyStatus: item.bountyStatus,
+      bountyReward: item.bountyReward,
+    },
+  });
+  redirect('/lost-found/list');
+}
+
+export async function editItem(item: Item) {
+  await prisma.item.update({
+    where: { id: item.id },
+    data: {
+      name: item.name,
+      description: item.description,
+      category: item.category,
+      status: item.status,
+      building: item.building,
+      location: item.location,
+      date: item.date,
+      imageUrl: item.imageUrl,
+      contactInfo: item.contactInfo,
+      reportedBy: item.reportedBy,
+      bountyStatus: item.bountyStatus,
+      bountyReward: item.bountyReward,
+    },
+  });
+  redirect('/lost-found/list');
+}
+
+export async function deleteItem(id: number) {
+  await prisma.item.delete({
+    where: { id },
+  });
+  redirect('/lost-found/list');
+}
+
+export async function getItems() {
+  return prisma.item.findMany({
+    orderBy: { createdAt: 'desc' },
+  });
+}
+
+/* replace mock data with:
+import { getItems } from '@/lib/dbActions';
+
+const items = await getItems(); */
+
+export async function getItemById(id: number) {
+  return prisma.item.findUnique({
+    where: { id },
+  });
+}
+
+export async function getItemsFiltered(filters?: {
+  status?: string;
+  category?: string;
+  building?: string;
+  bountyStatus?: boolean;
+  hideFound?: boolean;
+}) {
+  const where: any = {};
+
+  if (filters?.status) {
+    where.status = filters.status;
+  }
+  if (filters?.category) {
+    where.category = filters.category;
+  }
+  if (filters?.building) {
+    where.building = filters.building;
+  }
+  if (filters?.bountyStatus !== undefined) {
+    where.bountyStatus = filters.bountyStatus;
+  }
+  if (filters?.hideFound) {
+    where.status = { not: 'FOUND' };
+  }
+
+  return prisma.item.findMany({
+    where,
+    orderBy: { createdAt: 'desc' },
+  });
+}
+
+/* Usage examples:
+Get all found items
+const foundItems = await getItemsFiltered({ status: 'FOUND' });
+
+Get electronics in BIL
+const items = await getItemsFiltered({ category: 'ELECTRONICS', building: 'BIL' });
+
+Get items with bounties
+const bountyItems = await getItemsFiltered({ bountyStatus: true });
+
+Get all items (no filters)
+const allItems = await getItemsFiltered();
+
+Hide found items
+const items = await getItemsFiltered({ hideFound: true });
+
+Show all items
+const items = await getItemsFiltered({ hideFound: true });
+
+Hide found items + show only electronics
+const items = await getItemsFiltered({ hideFound: true, category: 'ELECTRONICS' }); */
