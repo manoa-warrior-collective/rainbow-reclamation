@@ -20,7 +20,7 @@ const Home = () => (
               <Link href="/browse-items" className="btn btn-primary me-2">
                 Browse Found Items
               </Link>
-              <Link href="/report-item" className="btn btn-secondary">
+              <Link href="/add-lost-item" className="btn btn-secondary">
                 Report Lost Item
               </Link>
             </div>
@@ -32,7 +32,7 @@ const Home = () => (
     {/* Features Section */}
     <Container className="features py-5">
       <h2 className="text-center mb-5">How It Works</h2>
-      <Row>
+      <Row className="justify-content-center">
         <Col md={6} lg={3} className="mb-4">
           <Card className="h-100 text-center">
             <Card.Body>
@@ -68,22 +68,11 @@ const Home = () => (
             </Card.Body>
           </Card>
         </Col>
-        <Col md={6} lg={3} className="mb-4">
-          <Card className="h-100 text-center">
-            <Card.Body>
-              <div className="fs-1 mb-3">👤</div>
-              <Card.Title>Student Profile</Card.Title>
-              <Card.Text>
-                Manage your account with basic student info including your name and department for secure item recovery.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
       </Row>
     </Container>
 
     {/* Recent Listings */}
-    <Container className="recent-listings py-5 bg-light">
+    <Container className="recent-listings py-5">
       <h2 className="text-center mb-5">Latest Listings</h2>
       <Row>
         <Col md={6} lg={3} className="mb-4">
@@ -91,7 +80,7 @@ const Home = () => (
             <Card.Body>
               <span className="badge bg-success mb-2">FOUND</span>
               <Card.Title>UH Student ID</Card.Title>
-              <Card.Text className="text-muted">Found near Campus Center • 2 hours ago</Card.Text>
+              <Card.Text>Found near Campus Center • 2 hours ago</Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -100,7 +89,7 @@ const Home = () => (
             <Card.Body>
               <span className="badge bg-warning mb-2">MISSING</span>
               <Card.Title>Black Laptop Charger</Card.Title>
-              <Card.Text className="text-muted">Last seen in Hamilton Library • 4 hours ago</Card.Text>
+              <Card.Text>Last seen in Hamilton Library • 4 hours ago</Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -109,7 +98,7 @@ const Home = () => (
             <Card.Body>
               <span className="badge bg-success mb-2">FOUND</span>
               <Card.Title>Blue Water Bottle</Card.Title>
-              <Card.Text className="text-muted">Found in Keller Hall • 1 day ago</Card.Text>
+              <Card.Text>Found in Keller Hall • 1 day ago</Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -118,7 +107,7 @@ const Home = () => (
             <Card.Body>
               <span className="badge bg-warning mb-2">MISSING</span>
               <Card.Title>Car Keys with Rainbow Keychain</Card.Title>
-              <Card.Text className="text-muted">Last seen near Parking Structure • 2 days ago</Card.Text>
+              <Card.Text>Last seen near Parking Structure • 2 days ago</Card.Text>
             </Card.Body>
           </Card>
         </Col>
