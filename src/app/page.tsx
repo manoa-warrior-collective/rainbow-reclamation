@@ -20,7 +20,7 @@ const Home = () => (
               <Link href="/browse-items" className="btn btn-primary me-2">
                 Browse Found Items
               </Link>
-              <Link href="/report-item" className="btn btn-secondary">
+              <Link href="/add-lost-item" className="btn btn-secondary">
                 Report Lost Item
               </Link>
             </div>
