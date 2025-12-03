@@ -3,7 +3,6 @@ import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
-import { useRouter } from 'next/navigation';
 
 const UserDashboard = async () => {
   // Protect the page, only logged in users can access it.
@@ -20,8 +19,6 @@ const UserDashboard = async () => {
       owner,
     },
   });
-
-  const router = useRouter();
 
   const myLostItems = items.filter((lostItem) => lostItem.name === '');
   const myFoundItems = items.filter((lostItem) => lostItem.name === '');
@@ -43,7 +40,7 @@ const UserDashboard = async () => {
               <Card.Body>
                 <Card.Title>Report Lost Item</Card.Title>
                 <Card.Text>Create a new lost item report so others can help you find it.</Card.Text>
-                <Button variant="secondary" onClick={() => router.push('/add-lost-item')}>
+                <Button variant="secondary" href="/add-lost-item">
                   Report Lost Item
                 </Button>
               </Card.Body>
