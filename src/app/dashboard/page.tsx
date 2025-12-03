@@ -25,12 +25,40 @@ const UserDashboard = async () => {
 
   return (
     <main>
-      <Container className="py-4">
+      <Container className="py-4 mt-4">
         <Row className="mb-4">
           <Col>
             <h1>My Dashboard</h1>
           </Col>
         </Row>
+
+        {/* Quick Action Cards */}
+        <Row className="mb-4">
+          <Col md={6} className="mb-3">
+            <Card className="h-100">
+              <Card.Body>
+                <Card.Title>Browse Items</Card.Title>
+                <Card.Text>Check if your lost item has been found or browse all items.</Card.Text>
+                <Button variant="primary" onClick={() => router.push('/browse-items')}>
+                  Browse Items
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={6} className="mb-3">
+            <Card className="h-100">
+              <Card.Body>
+                <Card.Title>Report Lost Item</Card.Title>
+                <Card.Text>Create a new lost item report so others can help you find it.</Card.Text>
+                <Button variant="secondary" onClick={() => router.push('/add-lost-item')}>
+                  Report Lost Item
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+
+        {/* My Lost Items */}
         <Row className="mb-4">
           <Col>
             <h2>My Lost Items</h2>

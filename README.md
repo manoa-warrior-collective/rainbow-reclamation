@@ -1,3 +1,3 @@
-[![ci-nextjs-application-template](https://github.com/ics-software-engineering/nextjs-application-template/actions/workflows/ci.yml/badge.svg)](https://github.com/ics-software-engineering/nextjs-application-template/actions/workflows/ci.yml)
+![ci-badge](https://github.com/manoa-warrior-collective/rainbow-reclamation/workflows/ci-rainbow-reclamation/badge.svg)
 
-For details, please see http://ics-software-engineering.github.io/nextjs-application-template/.
+For details, please see [http://manoa-warrior-collective.github.io/rainbow-reclamation/](https://github.com/manoa-warrior-collective/rainbow-reclamation).
