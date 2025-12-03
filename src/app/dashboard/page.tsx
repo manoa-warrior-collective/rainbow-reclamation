@@ -20,8 +20,8 @@ const UserDashboard = async () => {
     },
   });
 
-  const myLostItems = items.filter((lostItem) => lostItem.is_found === false);
-  const myFoundItems = items.filter((lostItem) => lostItem.is_found === true);
+  const myLostItems = items.filter((lostItem) => lostItem.name === '');
+  const myFoundItems = items.filter((lostItem) => lostItem.name === '');
 
   return (
     <main>
@@ -47,8 +47,8 @@ const UserDashboard = async () => {
                 {myLostItems.map((item) => (
                   <tr key={item.id}>
                     <td>{item.name}</td>
-                    <td>{item.category}</td>
-                    <td>{item.last_seen}</td>
+                    <td>{item.name}</td>
+                    <td>{item.name}</td>
                     <td>
                       <Badge>Not Found</Badge>
                     </td>
@@ -73,7 +73,7 @@ const UserDashboard = async () => {
                 {myFoundItems.map((item) => (
                   <tr key={item.id}>
                     <td>{item.name}</td>
-                    <td>{item.category}</td>
+                    <td>{item.name}</td>
                     <td>
                       <Badge>Found</Badge>
                     </td>
