@@ -20,6 +20,8 @@ const UserDashboard = async () => {
     },
   });
 
+  const router = useRouter();
+
   const myLostItems = items.filter((lostItem) => lostItem.is_found === false);
   const myFoundItems = items.filter((lostItem) => lostItem.is_found === true);
 
