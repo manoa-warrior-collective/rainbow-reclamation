@@ -36,6 +36,46 @@ enum Condition {
   poor
 }
 
+enum Status {
+  LOST
+  FOUND
+  CLAIMED
+}
+
+enum Category {
+  OTHER
+  ELECTRONICS
+  CLOTHING
+  ACCESSORIES
+  DAILY_NECESSITIES
+}
+
+enum Building {
+  BIL
+  KELL
+  POST
+  CAMPUS_CENTER
+  OTHER
+}
+
+model Item {
+  id            Int       @id @default(autoincrement())
+  name          String
+  description   String
+  category      Category  @default(OTHER)
+  status        Status
+  building      Building
+  location      String    // Additional location details
+  date          DateTime  // When it was lost/found
+  imageUrl      String?   // Optional image
+  contactInfo   String    // Email or phone
+  reportedBy    String    // User email or name
+  bountyStatus  Boolean   @default(false)
+  bountyReward  Float?    // Optional reward amount
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
 model Stuff {
   id        Int       @id @default(autoincrement())
   name      String
