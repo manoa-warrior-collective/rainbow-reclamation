@@ -82,7 +82,6 @@ const UserDashboard = async () => {
                     <td>{item.name}</td>
                     <td>{item.category}</td>
                     <td>{item.location}</td>
-                    <td>{item.dateLost}</td>
                     <td>
                       <Badge bg={item.status === 'Matched' ? 'success' : 'warning'}>{item.status}</Badge>
                     </td>
