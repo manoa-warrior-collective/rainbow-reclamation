@@ -1,6 +1,6 @@
 name: M3 Issue
 description: Create an issue in Rainbow Reclamation.
-projects: "manoa-warrior-collective/7"
+projects: "manoa-warrior-collective/6"
 body:
   - type: textarea
     attributes:
