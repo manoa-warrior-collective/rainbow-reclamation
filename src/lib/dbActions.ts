@@ -1,6 +1,6 @@
 'use server';
 
-import { Stuff, Condition } from '@prisma/client';
+import { Stuff, Condition, Item } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -90,5 +90,83 @@ export async function changePassword(credentials: { email: string; password: str
     data: {
       password,
     },
+  });
+}
+
+export async function addItem(item: {
+  name: string;
+  description: string;
+  category: string;
+  status: string;
+  building: string;
+  location: string;
+  date: Date;
+  imageUrl?: string;
+  contactInfo: string;
+  reportedBy: string;
+  bountyStatus: boolean;
+  bountyReward?: number;
+}) {
+  await prisma.item.create({
+    data: {
+      name: item.name,
+      description: item.description,
+      category: item.category as any,
+      status: item.status as any,
+      building: item.building as any,
+      location: item.location,
+      date: item.date,
+      imageUrl: item.imageUrl,
+      contactInfo: item.contactInfo,
+      reportedBy: item.reportedBy,
+      bountyStatus: item.bountyStatus,
+      bountyReward: item.bountyReward,
+    },
+  });
+  redirect('/lost-found/list');
+}
+
+export async function editItem(item: Item) {
+  await prisma.item.update({
+    where: { id: item.id },
+    data: {
+      name: item.name,
+      description: item.description,
+      category: item.category,
+      status: item.status,
+      building: item.building,
+      location: item.location,
+      date: item.date,
+      imageUrl: item.imageUrl,
+      contactInfo: item.contactInfo,
+      reportedBy: item.reportedBy,
+      bountyStatus: item.bountyStatus,
+      bountyReward: item.bountyReward,
+    },
+  });
+  redirect('/lost-found/list');
+}
+
+export async function deleteItem(id: number) {
+  await prisma.item.delete({
+    where: { id },
+  });
+  redirect('/lost-found/list');
+}
+
+export async function getItems() {
+  return prisma.item.findMany({
+    orderBy: { createdAt: 'desc' },
+  });
+}
+
+/* replace mock data with:
+import { getItems } from '@/lib/dbActions';
+
+const items = await getItems(); */
+
+export async function getItemById(id: number) {
+  return prisma.item.findUnique({
+    where: { id },
   });
 }
