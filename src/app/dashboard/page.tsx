@@ -1,9 +1,8 @@
-import { Container, Row, Col, Table, Badge, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Table, Badge } from 'react-bootstrap';
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
-import Link from 'next/link';
 
 const UserDashboard = async () => {
   // Protect the page, only logged in users can access it.
@@ -30,20 +29,6 @@ const UserDashboard = async () => {
         <Row className="mb-4">
           <Col>
             <h1>My Dashboard</h1>
-          </Col>
-        </Row>
-        {/* Quick Action Cards */}
-        <Row className="mb-4">
-          <Col md={6} className="mb-3">
-            <Card className="h-100">
-              <Card.Body>
-                <Card.Title>Report Lost Item</Card.Title>
-                <Card.Text>Create a new lost item report so others can help you find it.</Card.Text>
-                <Link href="/add-lost-item">
-                  <Button variant="secondary">Report Lost Item</Button>
-                </Link>
-              </Card.Body>
-            </Card>
           </Col>
         </Row>
         <Row className="mb-4">
