@@ -1,4 +1,5 @@
 import { Container, Row, Col, Table, Badge, Card, Button } from 'react-bootstrap';
+import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { loggedInProtectedPage } from '@/lib/page-protection';
@@ -40,8 +41,10 @@ const UserDashboard = async () => {
               <Card.Body>
                 <Card.Title>Report Lost Item</Card.Title>
                 <Card.Text>Create a new lost item report so others can help you find it.</Card.Text>
-                <Button variant="secondary" href="/add-lost-item">
-                  Report Lost Item
+                <Button variant="secondary">
+                  <Link href="/add-lost-item">
+                    Report Lost Item
+                  </Link>
                 </Button>
               </Card.Body>
             </Card>
