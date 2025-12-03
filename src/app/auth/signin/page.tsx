@@ -19,7 +19,7 @@ export default function LoginPage() {
     setError(null);
 
     const result = await signIn('credentials', {
-      callbackUrl: '/list',
+      // callbackUrl: '/list',
       email,
       password,
       redirect: false,
