@@ -60,6 +60,17 @@ const UserDashboard = () => {
               </Card.Body>
             </Card>
           </Col>
+          <Col md={6} className="mb-3">
+            <Card className="h-100">
+              <Card.Body>
+                <Card.Title>Report Lost Item</Card.Title>
+                <Card.Text>Create a new lost item report so others can help you find it.</Card.Text>
+                <Button variant="secondary" onClick={() => router.push('/add-lost-item')}>
+                  Report Lost Item
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
         </Row>
 
         {/* My Lost Items */}
