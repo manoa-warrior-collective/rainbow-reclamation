@@ -29,21 +29,6 @@ model User {
   role     Role   @default(USER)
 }
 
-enum Condition {
-  excellent
-  good
-  fair
-  poor
-}
-
-model Stuff {
-  id        Int       @id @default(autoincrement())
-  name      String
-  quantity  Int
-  condition Condition @default(good)
-  owner     String
-}
-
 model Item {
   id            Int     @id @default(autoincrement())
   name          String
@@ -51,6 +36,7 @@ model Item {
   is_bounty     boolean 
   bounty_reward Int
   category      Category @default(Other)
+  last_seen     Building
 }
 
 enum Category {
