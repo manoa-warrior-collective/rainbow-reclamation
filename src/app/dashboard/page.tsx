@@ -1,5 +1,4 @@
-import { Container, Row, Col, Table, Badge, Card, Button } from 'react-bootstrap';
-import Link from 'next/link';
+import { Container, Row, Col, Table, Badge } from 'react-bootstrap';
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { loggedInProtectedPage } from '@/lib/page-protection';
@@ -21,37 +20,17 @@ const UserDashboard = async () => {
     },
   });
 
-  const myLostItems = items.filter((lostItem) => lostItem.name === '');
-  const myFoundItems = items.filter((lostItem) => lostItem.name === '');
+  const myLostItems = items.filter((lostItem) => lostItem.is_found === false);
+  const myFoundItems = items.filter((lostItem) => lostItem.is_found === true);
 
   return (
     <main>
-      <Container className="py-4 mt-4">
+      <Container className="py-4">
         <Row className="mb-4">
           <Col>
             <h1>My Dashboard</h1>
           </Col>
         </Row>
-
-        {/* Quick Action Cards */}
-        <Row className="mb-4">
-          <Col md={6} className="mb-3" />
-          <Col md={6} className="mb-3">
-            <Card className="h-100">
-              <Card.Body>
-                <Card.Title>Report Lost Item</Card.Title>
-                <Card.Text>Create a new lost item report so others can help you find it.</Card.Text>
-                <Button variant="secondary">
-                  <Link href="/add-lost-item">
-                    Report Lost Item
-                  </Link>
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-
-        {/* My Lost Items */}
         <Row className="mb-4">
           <Col>
             <h2>My Lost Items</h2>
@@ -68,8 +47,8 @@ const UserDashboard = async () => {
                 {myLostItems.map((item) => (
                   <tr key={item.id}>
                     <td>{item.name}</td>
-                    <td>{item.name}</td>
-                    <td>{item.name}</td>
+                    <td>{item.category}</td>
+                    <td>{item.last_seen}</td>
                     <td>
                       <Badge>Not Found</Badge>
                     </td>
@@ -94,7 +73,7 @@ const UserDashboard = async () => {
                 {myFoundItems.map((item) => (
                   <tr key={item.id}>
                     <td>{item.name}</td>
-                    <td>{item.name}</td>
+                    <td>{item.category}</td>
                     <td>
                       <Badge>Found</Badge>
                     </td>
