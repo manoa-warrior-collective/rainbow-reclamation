@@ -1,4 +1,4 @@
-name: ci-nextjs-application-template
+name: ci-rainbow-reclamation
 on:
   push:
     branches: [main, master]
