@@ -16,7 +16,7 @@ const UserDashboard = async () => {
     } | null,
   );
   const owner = (session && session.user && session.user.email) || '';
-  const item = await prisma.stuff.findMany({
+  const stuff = await prisma.stuff.findMany({
     where: {
       owner,
     },
