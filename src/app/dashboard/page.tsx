@@ -1,4 +1,4 @@
-import { Container, Row, Col, Table, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Table, Badge, Card, Button } from 'react-bootstrap';
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { loggedInProtectedPage } from '@/lib/page-protection';
@@ -34,17 +34,7 @@ const UserDashboard = async () => {
 
         {/* Quick Action Cards */}
         <Row className="mb-4">
-          <Col md={6} className="mb-3">
-            <Card className="h-100">
-              <Card.Body>
-                <Card.Title>Browse Items</Card.Title>
-                <Card.Text>Check if your lost item has been found or browse all items.</Card.Text>
-                <Button variant="primary" onClick={() => router.push('/browse-items')}>
-                  Browse Items
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
+          <Col md={6} className="mb-3" />
           <Col md={6} className="mb-3">
             <Card className="h-100">
               <Card.Body>
