@@ -16,7 +16,7 @@ const RecoveryPage = ({ params }: PageProps) => (
     <Container id="recovery" className="py-4 mt-4">
       <Row className="mb-4">
         <Col>
-          <h1>How to Recover Item #{params.id}</h1>
+          <h1>How to Recover Item</h1>
           <p className="lead">Follow these steps to claim the item you selected from the Lost & Found.</p>
         </Col>
       </Row>
