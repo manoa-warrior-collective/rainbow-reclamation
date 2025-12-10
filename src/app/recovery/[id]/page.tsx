@@ -1,17 +1,9 @@
-/* eslint-disable react/jsx-one-expression-per-line */
-
 'use client';
 
 import { Col, Container, Row } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-const RecoveryPage = ({ params }: PageProps) => (
+const RecoveryPage = () => (
   <main>
     <Container id="recovery" className="py-4 mt-4">
       <Row className="mb-4">
