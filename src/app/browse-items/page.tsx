@@ -15,36 +15,33 @@ const BrowseItemsPage = async () => {
     } | null,
   );
   const owner = (session && session.user && session.user.email) || '';
-  const foundItems = await prisma.item.findMany({
+  const items = await prisma.item.findMany({
     where: {
       owner,
     },
   });
+  const foundItems = items.filter((item) => item.status === 'FOUND');
 
-  const handleClaimItem = (id: number) => {
-    router.push(`/recovery/${id}`);
-  };
-
-   return (
-     <main>
-       <Container id="list" fluid className="py-3">
-         <Row>
-           <Col>
-             <h1>List Contacts</h1>
-             <Row xs={1} md={2} lg={3} className="g-4">
-               {contacts.map((contact) => (
-                 <Col key={contact.firstName + contact.lastName}>
-                   <ContactCard
-                     contact={contact}
-                     notes={notes.filter(note => (note.contactId === contact.id))}
-                   />
-                 </Col>
-               ))}
-             </Row>
-           </Col>
-         </Row>
-       </Container>
-     </main>
+  return (
+    <main>
+      <Container id="list" fluid className="py-3">
+        <Row>
+          <Col>
+            <h1 className="mb-4">Browse Items</h1>
+            <p className="text-muted">Found items reported on campus</p>
+            <Row xs={1} md={2} lg={3} className="g-4">
+              {foundItems.filter((item) => (
+                <Col key={item.firstName + item.lastName}>
+                  <FoundItemCard
+                    item={item}
+                  />
+                </Col>
+              ))}
+            </Row>
+          </Col>
+        </Row>
+      </Container>
+    </main>
   );
 };
 
