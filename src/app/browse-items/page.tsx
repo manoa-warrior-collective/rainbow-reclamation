@@ -1,82 +1,50 @@
-/* eslint-disable react/jsx-one-expression-per-line */
+import { Container, Row, Col } from 'react-bootstrap';
+import { getServerSession } from 'next-auth';
+import { prisma } from '@/lib/prisma';
+import { loggedInProtectedPage } from '@/lib/page-protection';
+import authOptions from '@/lib/authOptions';
+import FoundItemCard from '@/components/FoundItemCard';
 
-'use client';
-
-import { Container, Row, Col, Button } from 'react-bootstrap';
-import Card from 'react-bootstrap/Card';
-import { useRouter } from 'next/navigation';
-
-const BrowseItemsPage = () => {
-  const router = useRouter();
-
-  // Mock items data
-  const items = [
-    {
-      id: 1,
-      title: 'Blue Backpack',
-      description: 'Found near Hamilton Library',
-      category: 'Accessories',
-      date: '2024-01-15',
-      location: 'Hamilton Library',
-      type: 'found',
+const BrowseItemsPage = async () => {
+  // Protect the page, only logged in users can access it.
+  const session = await getServerSession(authOptions);
+  loggedInProtectedPage(
+    session as {
+      user: { email: string; id: string; randomKey: string };
+      // eslint-disable-next-line @typescript-eslint/comma-dangle
+    } | null,
+  );
+  const owner = (session && session.user && session.user.email) || '';
+  const foundItems = await prisma.item.findMany({
+    where: {
+      owner,
     },
-    {
-      id: 2,
-      title: 'iPhone 13',
-      description: 'Black iPhone found in Campus Center',
-      category: 'Electronics',
-      date: '2024-01-14',
-      location: 'Campus Center',
-      type: 'found',
-    },
-    {
-      id: 3,
-      title: 'Calculus Textbook',
-      description: 'Math textbook left in classroom',
-      category: 'Books',
-      date: '2024-01-13',
-      location: 'Keller Hall',
-      type: 'found',
-    },
-  ];
+  });
 
   const handleClaimItem = (id: number) => {
     router.push(`/recovery/${id}`);
   };
 
-  return (
-    <main>
-      <Container className="py-4 mt-4">
-        <Row>
-          <Col>
-            <h1 className="mb-4">Browse Items</h1>
-            <p className="text-muted">Found items reported on campus</p>
-          </Col>
-        </Row>
-        <Row>
-          {items.map((item) => (
-            <Col key={item.id} md={6} lg={4} className="mb-4">
-              <Card>
-                <Card.Body>
-                  <Card.Title>{item.title}</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">{item.category}</Card.Subtitle>
-                  <Card.Text>{item.description}</Card.Text>
-                  <div className="mb-2">
-                    <strong>Location:</strong> {item.location}
-                  </div>
-                  <div className="mb-3">
-                    <strong>Date Found:</strong> {item.date}
-                  </div>
-                  <Button variant="primary" onClick={() => handleClaimItem(item.id)}>
-                    Claim Item
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </Container>
-    </main>
+   return (
+     <main>
+       <Container id="list" fluid className="py-3">
+         <Row>
+           <Col>
+             <h1>List Contacts</h1>
+             <Row xs={1} md={2} lg={3} className="g-4">
+               {contacts.map((contact) => (
+                 <Col key={contact.firstName + contact.lastName}>
+                   <ContactCard
+                     contact={contact}
+                     notes={notes.filter(note => (note.contactId === contact.id))}
+                   />
+                 </Col>
+               ))}
+             </Row>
+           </Col>
+         </Row>
+       </Container>
+     </main>
   );
 };
 
