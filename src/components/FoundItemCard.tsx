@@ -4,11 +4,11 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import { useRouter } from 'next/navigation';
 
-const BrowseItemsPage = () => {
+const BrowseItemsPage = ({ items }: { items: Item }) => {
   const router = useRouter();
 
-  const handleClaimItem = (id: number) => {
-    router.push(`/recovery/${id}`);
+  const handleClaimItem = () => {
+    router.push('/recovery/');
   };
 
   return (
@@ -29,12 +29,14 @@ const BrowseItemsPage = () => {
                   <Card.Subtitle className="mb-2 text-muted">{item.category}</Card.Subtitle>
                   <Card.Text>{item.description}</Card.Text>
                   <div className="mb-2">
-                    <strong>Location:</strong> {item.location}
+                    <strong>Location:</strong>
+                    {item.location}
                   </div>
                   <div className="mb-3">
-                    <strong>Date Found:</strong> {item.date}
+                    <strong>Date Found:</strong>
+                    {item.date}
                   </div>
-                  <Button variant="primary" onClick={() => handleClaimItem(item.id)}>
+                  <Button variant="primary" onClick={() => handleClaimItem()}>
                     Claim Item
                   </Button>
                 </Card.Body>
