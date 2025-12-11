@@ -261,10 +261,10 @@ main p {
   padding: 20px;
 }
 
-/* Card styles */
+/* Card styles - CHANGED: Now blends with background gradient */
 .card-style {
   width: 380px;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(168, 184, 255, 0.3);
   backdrop-filter: blur(16px);
   border-radius: 22px;
   padding: 35px;
@@ -319,6 +319,17 @@ main p {
   margin-top: 18px;
   font-size: 14px;
   color: #000000;
+}
+
+.switch-text-style a {
+  color: #4a9eff !important;
+  font-weight: 600;
+  text-decoration: underline !important;
+}
+
+.switch-text-style a:hover {
+  color: #2d7fd9 !important;
+  text-decoration: underline !important;
 }
 
 /* Badge styling for better visibility on light background */
