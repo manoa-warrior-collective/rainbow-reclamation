@@ -1,5 +1,5 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable operator-linebreak */
+/* eslint-disable react/jsx-one-expression-per-line */
 
 'use client';
 
@@ -18,13 +18,16 @@ const { useBountyBoard, formatDate, formatCurrency, getCategoryBadgeColor, forma
 export default function BountyBoardPage() {
   const router = useRouter();
 
-  const { items, loading, error, filters, updateFilter, stats } = useBountyBoard();
+  const { items, loading, error, filters, updateFilter, removeItem, stats } = useBountyBoard();
 
   const handleClaimItem = (id: number) => {
     router.push(`/recovery/${id}`);
   };
 
-  const handleSubmitItem = () => {
+  const handleSubmitItem = (itemId: number) => {
+    // Remove the item from the board
+    removeItem(itemId);
+    // Navigate to submission page
     router.push('/submission');
   };
 
@@ -181,7 +184,7 @@ export default function BountyBoardPage() {
                 <Card.Footer className="bg-light d-flex justify-content-between align-items-center">
                   <small className="text-muted">Contact: {item.contactInfo}</small>
                   <div className="d-flex gap-2">
-                    <Button variant="success" size="sm" onClick={handleSubmitItem}>
+                    <Button variant="success" size="sm" onClick={() => handleSubmitItem(item.id)}>
                       Submit Found Item
                     </Button>
                     <Button variant="primary" size="sm" onClick={() => handleClaimItem(item.id)}>

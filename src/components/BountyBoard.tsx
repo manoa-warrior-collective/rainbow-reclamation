@@ -1,5 +1,5 @@
-/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable operator-linebreak */
+/* eslint-disable arrow-body-style */
 import { useState, useEffect } from 'react';
 import { Status, Category, Building } from '@prisma/client';
 
@@ -41,6 +41,7 @@ export interface BountyBoardHook {
   error: string | null;
   filters: BountyBoardFilters;
   updateFilter: <K extends keyof BountyBoardFilters>(key: K, value: BountyBoardFilters[K]) => void;
+  removeItem: (itemId: number) => void;
   resetFilters: () => void;
   stats: BountyBoardStats;
   refetch: () => Promise<void>;
@@ -140,11 +141,11 @@ export const useBountyBoard = (): BountyBoardHook => {
         ];
 
         // Simulate network delay
-        await new Promise((resolve) => {
-          setTimeout(resolve, 800);
-        });
-        setItems(mockData);
-        setError(null);
+        setTimeout(() => {
+          setItems(mockData);
+          setError(null);
+          setLoading(false);
+        }, 800);
       } else {
         // Real API call
         const response = await fetch('/api/items/lost');
@@ -154,10 +155,10 @@ export const useBountyBoard = (): BountyBoardHook => {
         const data = await response.json();
         setItems(data);
         setError(null);
+        setLoading(false);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
-    } finally {
       setLoading(false);
     }
   };
@@ -169,6 +170,10 @@ export const useBountyBoard = (): BountyBoardHook => {
 
   const updateFilter = <K extends keyof BountyBoardFilters>(key: K, value: BountyBoardFilters[K]) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const removeItem = (itemId: number) => {
+    setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
 
   const resetFilters = () => {
@@ -214,6 +219,7 @@ export const useBountyBoard = (): BountyBoardHook => {
     error,
     filters,
     updateFilter,
+    removeItem,
     resetFilters,
     stats,
     refetch: fetchItems,
@@ -232,11 +238,12 @@ export const formatDate = (dateString: string): string => {
   });
 };
 
-export const formatCurrency = (amount: number): string =>
-  new Intl.NumberFormat('en-US', {
+export const formatCurrency = (amount: number): string => {
+  return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   }).format(amount);
+};
 
 export const getCategoryBadgeColor = (category: Category): string => {
   const colors: Record<Category, string> = {
@@ -249,13 +256,16 @@ export const getCategoryBadgeColor = (category: Category): string => {
   return colors[category];
 };
 
-export const formatCategoryName = (category: string): string =>
-  category
+export const formatCategoryName = (category: string): string => {
+  return category
     .split('_')
     .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
     .join(' ');
+};
 
-export const formatBuildingName = (building: string): string => building.replace('_', ' ');
+export const formatBuildingName = (building: string): string => {
+  return building.replace('_', ' ');
+};
 
 /**
  * BountyBoard component
