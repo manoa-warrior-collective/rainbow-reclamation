@@ -54,6 +54,14 @@ export const useBountyBoard = (): BountyBoardHook => {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [removedItemIds, setRemovedItemIds] = useState<number[]>(() => {
+    // Load removed items from sessionStorage on initial load
+    if (typeof window !== 'undefined') {
+      const stored = sessionStorage.getItem('removedBountyItems');
+      return stored ? JSON.parse(stored) : [];
+    }
+    return [];
+  });
   const [filters, setFilters] = useState<BountyBoardFilters>({
     searchTerm: '',
     filterCategory: 'ALL',
@@ -142,7 +150,9 @@ export const useBountyBoard = (): BountyBoardHook => {
 
         // Simulate network delay
         setTimeout(() => {
-          setItems(mockData);
+          // Filter out removed items
+          const filteredData = mockData.filter((item) => !removedItemIds.includes(item.id));
+          setItems(filteredData);
           setError(null);
           setLoading(false);
         }, 800);
@@ -166,13 +176,21 @@ export const useBountyBoard = (): BountyBoardHook => {
   useEffect(() => {
     fetchItems();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [removedItemIds]);
 
   const updateFilter = <K extends keyof BountyBoardFilters>(key: K, value: BountyBoardFilters[K]) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
   const removeItem = (itemId: number) => {
+    // Add to removed items list
+    const updatedRemovedIds = [...removedItemIds, itemId];
+    setRemovedItemIds(updatedRemovedIds);
+    // Save to sessionStorage
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('removedBountyItems', JSON.stringify(updatedRemovedIds));
+    }
+    // Remove from current items
     setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
 

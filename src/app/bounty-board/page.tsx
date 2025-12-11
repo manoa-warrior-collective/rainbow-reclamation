@@ -27,7 +27,7 @@ export default function BountyBoardPage() {
   const handleSubmitItem = (itemId: number) => {
     // Remove the item from the board
     removeItem(itemId);
-    // Navigate to submission page
+    // Navigate to submission page immediately after state update
     router.push('/submission');
   };
 
