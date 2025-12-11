@@ -24,6 +24,10 @@ export default function BountyBoardPage() {
     router.push(`/recovery/${id}`);
   };
 
+  const handleSubmitItem = () => {
+    router.push('/submission');
+  };
+
   if (loading) {
     return (
       <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '400px' }}>
@@ -176,9 +180,14 @@ export default function BountyBoardPage() {
                 </Card.Body>
                 <Card.Footer className="bg-light d-flex justify-content-between align-items-center">
                   <small className="text-muted">Contact: {item.contactInfo}</small>
-                  <Button variant="primary" size="sm" onClick={() => handleClaimItem(item.id)}>
-                    Submit Item
-                  </Button>
+                  <div className="d-flex gap-2">
+                    <Button variant="success" size="sm" onClick={handleSubmitItem}>
+                      Submit Found Item
+                    </Button>
+                    <Button variant="primary" size="sm" onClick={() => handleClaimItem(item.id)}>
+                      Claim Item
+                    </Button>
+                  </div>
                 </Card.Footer>
               </Card>
             </Col>
