@@ -242,9 +242,12 @@ main p {
   margin-top: 2rem;
 }
 
-#signout-page button {
+#signout-page button,
+#signout-page .btn {
   padding: 0.75rem 2rem;
   font-size: 1.1rem;
+  min-width: 120px;
+  width: 100%;
 }
 
 /* Page styles */
