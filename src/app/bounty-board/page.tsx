@@ -1,5 +1,4 @@
 /* eslint-disable operator-linebreak */
-/* eslint-disable max-len */
 
 'use client';
 
@@ -50,7 +49,7 @@ export default function BountyBoardPage() {
       <Card className="mb-4 shadow-sm">
         <Card.Body>
           <Row className="g-3">
-            <Col md={4}>
+            <Col md={5}>
               <InputGroup>
                 <InputGroup.Text>🔍</InputGroup.Text>
                 <Form.Control
@@ -74,7 +73,7 @@ export default function BountyBoardPage() {
                 ))}
               </Form.Select>
             </Col>
-            <Col md={3}>
+            <Col md={4}>
               <Form.Select
                 value={filters.filterBuilding}
                 onChange={(e) => updateFilter('filterBuilding', e.target.value)}
@@ -87,42 +86,25 @@ export default function BountyBoardPage() {
                 ))}
               </Form.Select>
             </Col>
-            <Col md={2}>
-              <Form.Check
-                type="switch"
-                id="bounty-switch"
-                label="Bounties Only"
-                checked={filters.showBountyOnly}
-                onChange={(e) => updateFilter('showBountyOnly', e.target.checked)}
-              />
-            </Col>
           </Row>
         </Card.Body>
       </Card>
 
       {/* Stats */}
       <Row className="mb-4">
-        <Col md={4}>
+        <Col md={6}>
           <Card className="text-center border-primary">
             <Card.Body>
               <h3 className="mb-0">{stats.totalItems}</h3>
-              <small className="text-muted">Total Lost Items</small>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card className="text-center border-success">
-            <Card.Body>
-              <h3 className="mb-0">{stats.activeBounties}</h3>
               <small className="text-muted">Active Bounties</small>
             </Card.Body>
           </Card>
         </Col>
-        <Col md={4}>
+        <Col md={6}>
           <Card className="text-center border-warning">
             <Card.Body>
               <h3 className="mb-0">{formatCurrency(stats.totalRewards)}</h3>
-              <small className="text-muted">Total Rewards</small>
+              <small className="text-muted">Total Rewards Available</small>
             </Card.Body>
           </Card>
         </Col>
