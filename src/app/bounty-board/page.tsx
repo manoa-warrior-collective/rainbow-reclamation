@@ -1,8 +1,10 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable operator-linebreak */
 
 'use client';
 
-import { Container, Row, Col, Card, Badge, Spinner, Alert, Form, InputGroup } from 'react-bootstrap';
+import { Container, Row, Col, Card, Badge, Spinner, Alert, Form, InputGroup, Button } from 'react-bootstrap';
+import { useRouter } from 'next/navigation';
 import BountyBoard, { type Item } from '@/components/BountyBoard';
 import { Category, Building } from '@prisma/client';
 
@@ -14,7 +16,13 @@ const { useBountyBoard, formatDate, formatCurrency, getCategoryBadgeColor, forma
  * Displays all lost items with bounty rewards
  */
 export default function BountyBoardPage() {
+  const router = useRouter();
+
   const { items, loading, error, filters, updateFilter, stats } = useBountyBoard();
+
+  const handleClaimItem = (id: number) => {
+    router.push(`/recovery/${id}`);
+  };
 
   if (loading) {
     return (
@@ -167,13 +175,10 @@ export default function BountyBoardPage() {
                   </div>
                 </Card.Body>
                 <Card.Footer className="bg-light d-flex justify-content-between align-items-center">
-                  <small className="text-muted">
-                    Contact:
-                    {item.contactInfo}
-                  </small>
-                  <a href={`/recovery?itemId=${item.id}`} className="btn btn-primary btn-sm">
-                    Claim Item
-                  </a>
+                  <small className="text-muted">Contact: {item.contactInfo}</small>
+                  <Button variant="primary" size="sm" onClick={() => handleClaimItem(item.id)}>
+                    Submit Item
+                  </Button>
                 </Card.Footer>
               </Card>
             </Col>
