@@ -21,7 +21,6 @@ export default function SignupPage() {
 
     const trimmedEmail = email.trim().toLowerCase();
 
-    // Frontend validation for hawaii.edu email
     if (!trimmedEmail.endsWith('@hawaii.edu')) {
       setError('Please use a hawaii.edu email address');
       setIsSubmitting(false);
