@@ -24,7 +24,7 @@ export default function SignupPage() {
     try {
       await createUser({ email: trimmedEmail, password });
       const result = await signIn('credentials', {
-        callbackUrl: '/list',
+        callbackUrl: '/',
         email: trimmedEmail,
         password,
         redirect: false,
@@ -35,7 +35,7 @@ export default function SignupPage() {
         return;
       }
 
-      router.push('/app/page.tsx');
+      router.push('/');
     } catch (err) {
       console.error('Sign up failed', err);
       setError('Unable to create account. Please try a different email or try again later.');
