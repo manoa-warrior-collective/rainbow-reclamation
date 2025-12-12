@@ -69,6 +69,12 @@ export async function deleteStuff(id: number) {
  */
 export async function createUser(credentials: { email: string; password: string }) {
   // console.log(`createUser data: ${JSON.stringify(credentials, null, 2)}`);
+
+  // Validate hawaii.edu email
+  if (!credentials.email.endsWith('@hawaii.edu')) {
+    throw new Error('Only hawaii.edu email addresses are allowed');
+  }
+
   const password = await hash(credentials.password, 10);
   await prisma.user.create({
     data: {

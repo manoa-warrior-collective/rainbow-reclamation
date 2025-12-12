@@ -21,6 +21,12 @@ export default function SignupPage() {
 
     const trimmedEmail = email.trim().toLowerCase();
 
+    if (!trimmedEmail.endsWith('@hawaii.edu')) {
+      setError('Please use a hawaii.edu email address');
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       await createUser({ email: trimmedEmail, password });
       const result = await signIn('credentials', {
