@@ -1,22 +1,14 @@
-/* eslint-disable react/jsx-one-expression-per-line */
-
 'use client';
 
 import { Col, Container, Row } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-const RecoveryPage = ({ params }: PageProps) => (
+const RecoveryPage = () => (
   <main>
     <Container id="recovery" className="py-4 mt-4">
       <Row className="mb-4">
         <Col>
-          <h1>How to Recover Item #{params.id}</h1>
+          <h1>How to Recover Item</h1>
           <p className="lead">Follow these steps to claim the item you selected from the Lost & Found.</p>
         </Col>
       </Row>
@@ -93,10 +85,12 @@ const RecoveryPage = ({ params }: PageProps) => (
               <h4>📞 Contact Us</h4>
               <hr />
               <p>
-                <strong>Phone:</strong> (555) 555-5555
+                <strong>Phone:</strong>
+                (555) 555-5555
               </p>
               <p>
-                <strong>Email:</strong> john@foo.com
+                <strong>Email:</strong>
+                john@foo.com
               </p>
               <p className="mb-0">Have questions? Contact us during office hours for assistance.</p>
             </Card.Body>
