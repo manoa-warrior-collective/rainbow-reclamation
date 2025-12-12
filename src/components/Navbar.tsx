@@ -11,7 +11,6 @@ import {
   Lock,
   PersonFill,
   PersonPlusFill,
-  Trophy,
   Speedometer2,
   Grid3x3Gap,
   ShieldCheck,
@@ -31,13 +30,14 @@ const NavBar: React.FC = () => {
         <Navbar.Brand href="/">Rainbow Reclamation</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto justify-content-start">{/* Empty - all links moved to dropdown */}</Nav>
+          <Nav className="me-auto justify-content-start">
+            <Nav.Link id="bounty-board-nav" href="/bounty-board" active={pathName === '/bounty-board'}>
+              Bounty Board
+            </Nav.Link>
+          </Nav>
           <Nav>
             {session ? (
               <NavDropdown id="login-dropdown" title={currentUser}>
-                <NavDropdown.Item id="bounty-board-nav" href="/bounty-board" active={pathName === '/bounty-board'}>
-                  <Trophy /> Bounty Board
-                </NavDropdown.Item>
                 <NavDropdown.Item id="dashboard-nav" href="/dashboard" active={pathName === '/dashboard'}>
                   <Speedometer2 /> My Dashboard
                 </NavDropdown.Item>
@@ -63,10 +63,6 @@ const NavBar: React.FC = () => {
               </NavDropdown>
             ) : (
               <NavDropdown id="login-dropdown" title="Login">
-                <NavDropdown.Item id="bounty-board-nav" href="/bounty-board" active={pathName === '/bounty-board'}>
-                  <Trophy /> Bounty Board
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
                 <NavDropdown.Item id="login-dropdown-sign-in" href="/auth/signin" active={pathName === '/auth/signin'}>
                   <PersonFill /> Sign in
                 </NavDropdown.Item>

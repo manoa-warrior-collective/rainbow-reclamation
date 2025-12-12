@@ -7,6 +7,8 @@ body {
   margin: 0;
   background: linear-gradient(180deg, #a8b8ff, #c5d3ff);
   background-attachment: fixed;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .wrapper {
@@ -250,6 +252,63 @@ main p {
   width: 100%;
 }
 
+@media (max-width: 768px) {
+  #signout-page {
+    min-height: 100vh;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  #signout-page h2 {
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+  }
+
+  #signout-page .row {
+    margin-top: 1.5rem;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    gap: 1rem;
+  }
+
+  /* Force hide the empty columns with xs={4} */
+  #signout-page .row > .col:first-child,
+  #signout-page .row > .col:last-child {
+    display: none !important;
+  }
+
+  /* Make button columns auto-width and centered */
+  #signout-page .row > .col:not(:first-child):not(:last-child) {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    max-width: none !important;
+    padding: 0 0.25rem !important;
+  }
+
+  #signout-page button,
+  #signout-page .btn {
+    padding: 0.65rem 1.75rem;
+    font-size: 1rem;
+    min-width: 110px;
+    width: auto !important;
+  }
+
+  /* Ensure wrapper takes full height */
+  body .wrapper {
+    min-height: 100vh;
+  }
+
+  /* Make footer stick to bottom without gap */
+  footer {
+    margin-top: 0 !important;
+  }
+}
+
 /* Page styles */
 .page-style {
   min-height: 100vh;
@@ -388,7 +447,8 @@ main p {
 /* Responsive Footer Design */
 @media (max-width: 768px) {
   footer {
-    padding: 30px 0;
+    padding: 25px 15px;
+    margin-top: auto;
   }
 
   footer .row {
@@ -400,21 +460,22 @@ main p {
   footer .col-md-4 {
     flex: 1;
     margin-bottom: 0;
-    padding: 0 10px;
+    padding: 0 8px;
   }
 
   footer h3 {
-    font-size: 0.9rem;
-    margin-bottom: 10px;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
   }
 
   footer p {
-    font-size: 11px;
-    margin-bottom: 10px;
+    font-size: 0.65rem;
+    margin-bottom: 6px;
+    line-height: 1.4;
   }
 
   footer strong {
-    font-size: 11px;
+    font-size: 0.65rem;
   }
 }
 
