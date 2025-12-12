@@ -35,7 +35,7 @@ export default function SignupPage() {
         return;
       }
 
-      router.push('/list');
+      router.push('/app/page.tsx');
     } catch (err) {
       console.error('Sign up failed', err);
       setError('Unable to create account. Please try a different email or try again later.');

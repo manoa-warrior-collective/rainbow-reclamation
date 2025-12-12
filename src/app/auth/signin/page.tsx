@@ -32,7 +32,7 @@ export default function LoginPage() {
     }
 
     setIsSubmitting(false);
-    router.push('/list');
+    router.push('/app/page.tsx');
   };
 
   return (
