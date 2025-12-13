@@ -34,6 +34,11 @@ const NavBar: React.FC = () => {
             <Nav.Link id="bounty-board-nav" href="/bounty-board" active={pathName === '/bounty-board'}>
               Bounty Board
             </Nav.Link>
+            {currentUser && (
+              <Nav.Link id="report-item-nav" href="/add-lost-item" active={pathName === '/add-lost-item'}>
+                Report Item
+              </Nav.Link>
+            )}
           </Nav>
           <Nav>
             {session ? (

@@ -20,7 +20,7 @@ const Home = () => (
               <Link href="/browse-items" className="btn btn-primary me-2">
                 Browse Found Items
               </Link>
-              <Link href="/report-lost" className="btn btn-secondary">
+              <Link href="/add-lost-item" className="btn btn-secondary">
                 Report Lost Item
               </Link>
             </div>
@@ -42,7 +42,7 @@ const Home = () => (
                 Lost something? Create a detailed missing poster with description and last known location. Our community
                 will help you find it.
               </Card.Text>
-              <Link href="/report-lost" className="btn btn-sm btn-outline-primary mt-2">
+              <Link href="/add-lost-item" className="btn btn-sm btn-outline-primary mt-2">
                 Report Lost Item
               </Link>
             </Card.Body>
