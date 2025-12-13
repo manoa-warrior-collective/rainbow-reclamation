@@ -2,14 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import { Row, Col, Button } from 'react-bootstrap';
-import { FileText, BarChart, People } from 'react-bootstrap-icons';
+import { BarChart, People } from 'react-bootstrap-icons';
 
 const AdminActionCards: React.FC = () => {
   const router = useRouter();
-
-  const handleNewPosting = () => {
-    router.push('/admin/create-posting');
-  };
 
   const handleViewReports = () => {
     router.push('/admin/analytics');
@@ -23,19 +19,6 @@ const AdminActionCards: React.FC = () => {
 
   return (
     <Row className="admin-actions">
-      <Col xs={12} md={6} className="mb-3">
-        <div className="action-card">
-          <h3>
-            <FileText className="me-2" />
-            Create Official Posting
-          </h3>
-          <p>Add new found items from the official Mānoa Lost & Found</p>
-          <Button className="btn" onClick={handleNewPosting}>
-            New Posting
-          </Button>
-        </div>
-      </Col>
-
       <Col xs={12} md={6} className="mb-3">
         <div className="action-card">
           <h3>
