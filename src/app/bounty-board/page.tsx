@@ -11,14 +11,18 @@ import { Category, Building } from '@prisma/client';
 const { useBountyBoard, formatDate, formatCurrency, getCategoryBadgeColor, formatCategoryName, formatBuildingName } =
   BountyBoard;
 
+interface BountyBoardClientProps {
+  items: Item[];
+}
+
 /**
- * Bounty Board Page
+ * Bounty Board Client Component
  * Displays all lost items with bounty rewards
  */
-export default function BountyBoardPage() {
+export default function BountyBoardClient({ items: initialItems }: BountyBoardClientProps) {
   const router = useRouter();
 
-  const { items, loading, error, filters, updateFilter, removeItem, stats } = useBountyBoard();
+  const { items, loading, error, filters, updateFilter, removeItem, stats } = useBountyBoard(initialItems);
 
   const handleClaimItem = (id: number) => {
     router.push(`/recovery/${id}`);

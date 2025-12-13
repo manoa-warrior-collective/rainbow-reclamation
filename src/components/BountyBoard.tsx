@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable operator-linebreak */
 /* eslint-disable arrow-body-style */
 import { useState, useEffect } from 'react';
@@ -49,147 +50,31 @@ export interface BountyBoardHook {
 
 /**
  * Custom hook for managing bounty board state and logic
+ * @param initialItems - Items to display (should be fetched in the parent component)
  */
-export const useBountyBoard = (): BountyBoardHook => {
-  const [items, setItems] = useState<Item[]>([]);
-  const [loading, setLoading] = useState(true);
+export const useBountyBoard = (initialItems: Item[] = []): BountyBoardHook => {
+  const [items, setItems] = useState<Item[]>(initialItems);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [removedItemIds, setRemovedItemIds] = useState<number[]>(() => {
-    // Load removed items from sessionStorage on initial load
-    if (typeof window !== 'undefined') {
-      const stored = sessionStorage.getItem('removedBountyItems');
-      return stored ? JSON.parse(stored) : [];
-    }
-    return [];
-  });
+  const [removedItemIds, setRemovedItemIds] = useState<number[]>([]);
   const [filters, setFilters] = useState<BountyBoardFilters>({
     searchTerm: '',
     filterCategory: 'ALL',
     filterBuilding: 'ALL',
   });
 
-  const fetchItems = async () => {
-    try {
-      setLoading(true);
-
-      // TODO: Remove mock data when API is ready
-      // Temporary mock data for testing UI
-      const useMockData = true; // Set to false when API is ready
-
-      if (useMockData) {
-        // Mock data for testing - ONLY items with bounties
-        const mockData: Item[] = [
-          {
-            id: 1,
-            name: 'iPhone 13 Pro',
-            description: 'Space gray iPhone with blue case, last seen near the cafeteria',
-            category: 'ELECTRONICS' as Category,
-            status: 'LOST' as Status,
-            building: 'CAMPUS_CENTER' as Building,
-            location: 'Near food court, table 12',
-            date: new Date('2024-12-08').toISOString(),
-            imageUrl: 'https://images.unsplash.com/photo-1592286927505-f0e2d15c2b3b?w=400',
-            contactInfo: 'john.doe@hawaii.edu',
-            reportedBy: 'John Doe',
-            bountyStatus: true,
-            bountyReward: 50.0,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          },
-          {
-            id: 2,
-            name: 'Blue Nike Backpack',
-            description: 'Navy blue Nike backpack with laptop compartment and UH keychain',
-            category: 'ACCESSORIES' as Category,
-            status: 'LOST' as Status,
-            building: 'BIL' as Building,
-            location: 'Second floor study area, near vending machines',
-            date: new Date('2024-12-09').toISOString(),
-            imageUrl: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400',
-            contactInfo: 'jane.smith@hawaii.edu',
-            reportedBy: 'Jane Smith',
-            bountyStatus: true,
-            bountyReward: 25.0,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          },
-          {
-            id: 4,
-            name: 'Black Leather Wallet',
-            description: 'Black leather wallet with student ID and credit cards',
-            category: 'ACCESSORIES' as Category,
-            status: 'LOST' as Status,
-            building: 'POST' as Building,
-            location: 'Auditorium, row F seat 8',
-            date: new Date('2024-12-10').toISOString(),
-            contactInfo: 'alice.wong@hawaii.edu',
-            reportedBy: 'Alice Wong',
-            bountyStatus: true,
-            bountyReward: 75.0,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          },
-          {
-            id: 5,
-            name: 'AirPods Pro',
-            description: 'White AirPods Pro with charging case',
-            category: 'ELECTRONICS' as Category,
-            status: 'LOST' as Status,
-            building: 'CAMPUS_CENTER' as Building,
-            location: 'Library, third floor',
-            date: new Date('2024-12-06').toISOString(),
-            imageUrl: 'https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=400',
-            contactInfo: 'mike.chen@hawaii.edu',
-            reportedBy: 'Mike Chen',
-            bountyStatus: true,
-            bountyReward: 40.0,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          },
-        ];
-
-        // Simulate network delay
-        setTimeout(() => {
-          // Filter out removed items
-          const filteredData = mockData.filter((item) => !removedItemIds.includes(item.id));
-          setItems(filteredData);
-          setError(null);
-          setLoading(false);
-        }, 800);
-      } else {
-        // Real API call
-        const response = await fetch('/api/items/lost');
-        if (!response.ok) {
-          throw new Error('Failed to fetch items');
-        }
-        const data = await response.json();
-        setItems(data);
-        setError(null);
-        setLoading(false);
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
-      setLoading(false);
-    }
-  };
-
+  // Update items when initialItems changes
   useEffect(() => {
-    fetchItems();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [removedItemIds]);
+    setItems(initialItems.filter((item) => !removedItemIds.includes(item.id)));
+  }, [initialItems, removedItemIds]);
 
   const updateFilter = <K extends keyof BountyBoardFilters>(key: K, value: BountyBoardFilters[K]) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
   const removeItem = (itemId: number) => {
-    // Add to removed items list
-    const updatedRemovedIds = [...removedItemIds, itemId];
-    setRemovedItemIds(updatedRemovedIds);
-    // Save to sessionStorage
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem('removedBountyItems', JSON.stringify(updatedRemovedIds));
-    }
+    // Add to removed items list (stored in memory only)
+    setRemovedItemIds((prev) => [...prev, itemId]);
     // Remove from current items
     setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
@@ -200,6 +85,11 @@ export const useBountyBoard = (): BountyBoardHook => {
       filterCategory: 'ALL',
       filterBuilding: 'ALL',
     });
+  };
+
+  const refetch = async () => {
+    // No-op since data is passed as props
+    // Parent component should handle refetching
   };
 
   // Filter items based on current filters
@@ -240,7 +130,7 @@ export const useBountyBoard = (): BountyBoardHook => {
     removeItem,
     resetFilters,
     stats,
-    refetch: fetchItems,
+    refetch,
   };
 };
 

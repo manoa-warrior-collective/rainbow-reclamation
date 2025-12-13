@@ -20,7 +20,7 @@ const Home = () => (
               <Link href="/browse-items" className="btn btn-primary me-2">
                 Browse Found Items
               </Link>
-              <Link href="/add-lost-item" className="btn btn-secondary">
+              <Link href="/report-lost" className="btn btn-secondary">
                 Report Lost Item
               </Link>
             </div>
@@ -42,6 +42,9 @@ const Home = () => (
                 Lost something? Create a detailed missing poster with description and last known location. Our community
                 will help you find it.
               </Card.Text>
+              <Link href="/report-lost" className="btn btn-sm btn-outline-primary mt-2">
+                Report Lost Item
+              </Link>
             </Card.Body>
           </Card>
         </Col>
@@ -54,6 +57,9 @@ const Home = () => (
                 Browse active requests from fellow students looking for their lost items. Help others and earn
                 recognition in our community.
               </Card.Text>
+              <Link href="/bounty-board" className="btn btn-sm btn-outline-primary mt-2">
+                View Bounties
+              </Link>
             </Card.Body>
           </Card>
         </Col>
@@ -65,6 +71,9 @@ const Home = () => (
               <Card.Text>
                 Check the latest found items posted by the official Mānoa Lost & Found and verified community members.
               </Card.Text>
+              <Link href="/browse-items" className="btn btn-sm btn-outline-primary mt-2">
+                Browse Items
+              </Link>
             </Card.Body>
           </Card>
         </Col>
