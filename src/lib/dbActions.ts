@@ -99,6 +99,82 @@ export async function changePassword(credentials: { email: string; password: str
   });
 }
 
+/**
+ * Adds a new lost item to the database.
+ * @param item, an object with item details and status set to LOST.
+ */
+export async function addLostItem(item: {
+  name: string;
+  description: string;
+  category: string;
+  building: string;
+  location: string;
+  date: string;
+  imageUrl?: string;
+  contactInfo: string;
+  reportedBy: string;
+  bountyStatus: boolean;
+  bountyReward?: number;
+}) {
+  await prisma.item.create({
+    data: {
+      name: item.name,
+      description: item.description,
+      category: item.category as any,
+      status: 'LOST', // Always set status to LOST for lost items
+      building: item.building as any,
+      location: item.location,
+      date: new Date(item.date), // Convert string to Date
+      imageUrl: item.imageUrl || null,
+      contactInfo: item.contactInfo,
+      reportedBy: item.reportedBy,
+      bountyStatus: item.bountyStatus,
+      bountyReward: item.bountyReward || null,
+    },
+  });
+  redirect('/dashboard');
+}
+
+/**
+ * Adds a new found item to the database.
+ * @param item, an object with item details and status set to FOUND.
+ */
+export async function addFoundItem(item: {
+  name: string;
+  description: string;
+  category: string;
+  building: string;
+  location: string;
+  date: string;
+  imageUrl?: string;
+  contactInfo: string;
+  reportedBy: string;
+  bountyStatus: boolean;
+  bountyReward?: number;
+}) {
+  await prisma.item.create({
+    data: {
+      name: item.name,
+      description: item.description,
+      category: item.category as any,
+      status: 'FOUND', // Always set status to FOUND for found items
+      building: item.building as any,
+      location: item.location,
+      date: new Date(item.date), // Convert string to Date
+      imageUrl: item.imageUrl || null,
+      contactInfo: item.contactInfo,
+      reportedBy: item.reportedBy,
+      bountyStatus: item.bountyStatus,
+      bountyReward: item.bountyReward || null,
+    },
+  });
+  redirect('/dashboard');
+}
+
+/**
+ * Adds a new item to the database (generic, allows custom status).
+ * @param item, an object with item details including status.
+ */
 export async function addItem(item: {
   name: string;
   description: string;
@@ -132,6 +208,10 @@ export async function addItem(item: {
   redirect('/lost-found/list');
 }
 
+/**
+ * Edits an existing item in the database.
+ * @param item, an object with all item properties including id.
+ */
 export async function editItem(item: Item) {
   await prisma.item.update({
     where: { id: item.id },
@@ -153,6 +233,10 @@ export async function editItem(item: Item) {
   redirect('/lost-found/list');
 }
 
+/**
+ * Deletes an existing item from the database.
+ * @param id, the id of the item to delete.
+ */
 export async function deleteItem(id: number) {
   await prisma.item.delete({
     where: { id },
@@ -160,17 +244,19 @@ export async function deleteItem(id: number) {
   redirect('/lost-found/list');
 }
 
+/**
+ * Gets all items from the database ordered by creation date.
+ */
 export async function getItems() {
   return prisma.item.findMany({
     orderBy: { createdAt: 'desc' },
   });
 }
 
-/* replace mock data with:
-import { getItems } from '@/lib/dbActions';
-
-const items = await getItems(); */
-
+/**
+ * Gets a single item by id.
+ * @param id, the id of the item to retrieve.
+ */
 export async function getItemById(id: number) {
   return prisma.item.findUnique({
     where: { id },
