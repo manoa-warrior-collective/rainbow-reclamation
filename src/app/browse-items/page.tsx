@@ -14,13 +14,17 @@ const BrowseItemsPage = async () => {
       // eslint-disable-next-line @typescript-eslint/comma-dangle
     } | null,
   );
-  const owner = (session && session.user && session.user.email) || '';
-  const items = await prisma.item.findMany({
+
+  // Fetch all items with FOUND status (not filtered by current user)
+  // This allows users to browse all found items reported by anyone
+  const foundItems = await prisma.item.findMany({
     where: {
-      owner,
+      status: 'FOUND',
+    },
+    orderBy: {
+      createdAt: 'desc',
     },
   });
-  const foundItems = items.filter((item) => item.status === 'FOUND');
 
   return (
     <main>
@@ -29,15 +33,17 @@ const BrowseItemsPage = async () => {
           <Col>
             <h1 className="mb-4">Browse Items</h1>
             <p className="text-muted">Found items reported on campus</p>
-            <Row xs={1} md={2} lg={3} className="g-4">
-              {foundItems.filter((item) => (
-                <Col key={item.firstName + item.lastName}>
-                  <FoundItemCard
-                    item={item}
-                  />
-                </Col>
-              ))}
-            </Row>
+            {foundItems.length === 0 ? (
+              <p className="text-muted">No found items available at this time.</p>
+            ) : (
+              <Row xs={1} md={2} lg={3} className="g-4">
+                {foundItems.map((item) => (
+                  <Col key={item.id}>
+                    <FoundItemCard items={item} />
+                  </Col>
+                ))}
+              </Row>
+            )}
           </Col>
         </Row>
       </Container>

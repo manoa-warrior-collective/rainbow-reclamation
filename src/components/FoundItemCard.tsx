@@ -1,52 +1,63 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+
 'use client';
 
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import { useRouter } from 'next/navigation';
 
-const BrowseItemsPage = ({ items }: { items: Item }) => {
+// Define the Item type based on your Prisma schema
+type Item = {
+  id: number;
+  name: string;
+  description: string;
+  category: string;
+  status: string;
+  building: string;
+  location: string;
+  date: Date;
+  imageUrl: string | null;
+  contactInfo: string;
+  reportedBy: string;
+  bountyStatus: boolean;
+  bountyReward: number | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+const FoundItemCard = ({ items }: { items: Item }) => {
   const router = useRouter();
 
   const handleClaimItem = () => {
-    router.push('/recovery/');
+    router.push(`/recovery/${items.id}`);
   };
 
   return (
-    <main>
-      <Container className="py-4 mt-4">
-        <Row>
-          <Col>
-            <h1 className="mb-4">Browse Items</h1>
-            <p className="text-muted">Found items reported on campus</p>
-          </Col>
-        </Row>
-        <Row>
-          {items.map((item) => (
-            <Col key={item.id} md={6} lg={4} className="mb-4">
-              <Card>
-                <Card.Body>
-                  <Card.Title>{item.title}</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">{item.category}</Card.Subtitle>
-                  <Card.Text>{item.description}</Card.Text>
-                  <div className="mb-2">
-                    <strong>Location:</strong>
-                    {item.location}
-                  </div>
-                  <div className="mb-3">
-                    <strong>Date Found:</strong>
-                    {item.date}
-                  </div>
-                  <Button variant="primary" onClick={() => handleClaimItem()}>
-                    Claim Item
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </Container>
-    </main>
+    <Card className="h-100">
+      {items.imageUrl && (
+        <Card.Img variant="top" src={items.imageUrl} alt={items.name} style={{ height: '200px', objectFit: 'cover' }} />
+      )}
+      <Card.Body className="d-flex flex-column">
+        <Card.Title>{items.name}</Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">{items.category}</Card.Subtitle>
+        <Card.Text>{items.description}</Card.Text>
+        <div className="mb-2">
+          <strong>Location:</strong> {items.building} - {items.location}
+        </div>
+        <div className="mb-3">
+          <strong>Date Found:</strong> {new Date(items.date).toLocaleDateString()}
+        </div>
+        {items.bountyStatus && items.bountyReward && (
+          <div className="mb-3 text-success">
+            <strong>Bounty:</strong> ${items.bountyReward}
+          </div>
+        )}
+        <Button variant="primary" onClick={handleClaimItem} className="mt-auto">
+          Claim Item
+        </Button>
+      </Card.Body>
+    </Card>
   );
 };
 
-export default BrowseItemsPage;
+export default FoundItemCard;
