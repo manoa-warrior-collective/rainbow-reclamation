@@ -4,9 +4,13 @@ import { Role } from '@prisma/client';
 /**
  * Redirects to the login page if the user is not logged in.
  */
-export const loggedInProtectedPage = (session: { user: { email: string; id: string; randomKey: string } } | null) => {
+export const loggedInProtectedPage = (
+  session: { user: { email: string; id: string; randomKey: string } } | null,
+  currentPath?: string,
+) => {
   if (!session) {
-    redirect('/auth/signin');
+    const callbackUrl = currentPath ? `?callbackUrl=${encodeURIComponent(currentPath)}` : '';
+    redirect(`/auth/signin${callbackUrl}`);
   }
 };
 

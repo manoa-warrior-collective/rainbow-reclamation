@@ -48,7 +48,7 @@ const AddLostItemForm: React.FC = () => {
     return <LoadingSpinner />;
   }
   if (status === 'unauthenticated') {
-    router.push('/auth/signin');
+    router.push('/auth/signin?callbackUrl=/add-lost-item');
   }
 
   return (

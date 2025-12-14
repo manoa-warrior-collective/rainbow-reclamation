@@ -10,6 +10,7 @@ const AddLostItem = async () => {
     session as {
       user: { email: string; id: string; randomKey: string };
     } | null,
+    '/add-lost-item',
   );
   return (
     <main>
