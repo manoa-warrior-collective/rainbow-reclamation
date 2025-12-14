@@ -5,13 +5,14 @@ import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import swal from 'sweetalert';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { addLostItem } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddLostItemSchema } from '@/lib/validationSchemas';
 
 const AddLostItemForm: React.FC = () => {
   const { data: session, status } = useSession();
+  const router = useRouter();
   const currentUser = session?.user?.email || '';
   const {
     register,
@@ -47,7 +48,7 @@ const AddLostItemForm: React.FC = () => {
     return <LoadingSpinner />;
   }
   if (status === 'unauthenticated') {
-    redirect('/auth/signin');
+    router.push('/auth/signin');
   }
 
   return (
