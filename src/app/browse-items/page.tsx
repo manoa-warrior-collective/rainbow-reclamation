@@ -12,6 +12,7 @@ const BrowseItemsPage = async () => {
     session as {
       user: { email: string; id: string; randomKey: string };
     } | null,
+    '/browse-items',
   );
 
   // Fetch all items with FOUND status
