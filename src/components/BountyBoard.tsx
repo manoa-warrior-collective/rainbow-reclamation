@@ -66,7 +66,8 @@ export const useBountyBoard = (initialItems: Item[] = []): BountyBoardHook => {
   // Update items when initialItems changes
   useEffect(() => {
     setItems(initialItems.filter((item) => !removedItemIds.includes(item.id)));
-  }, [initialItems, removedItemIds]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialItems.length, removedItemIds]);
 
   const updateFilter = <K extends keyof BountyBoardFilters>(key: K, value: BountyBoardFilters[K]) => {
     setFilters((prev) => ({ ...prev, [key]: value }));

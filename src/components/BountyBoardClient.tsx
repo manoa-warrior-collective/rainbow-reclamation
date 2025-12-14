@@ -5,7 +5,7 @@
 
 import { Container, Row, Col, Card, Badge, Spinner, Alert, Form, InputGroup, Button } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import BountyBoard, { type Item } from '@/components/BountyBoard';
 import { Category, Building } from '@prisma/client';
 
@@ -24,9 +24,12 @@ export default function BountyBoardClient({ items: initialItems }: BountyBoardCl
   const router = useRouter();
   const [hiddenItems, setHiddenItems] = useState<number[]>([]);
 
-  const { items, loading, error, filters, updateFilter, stats } = useBountyBoard(
-    initialItems.filter((item) => !hiddenItems.includes(item.id)),
+  const visibleItems = useMemo(
+    () => initialItems.filter((item) => !hiddenItems.includes(item.id)),
+    [initialItems, hiddenItems],
   );
+
+  const { items, loading, error, filters, updateFilter, stats } = useBountyBoard(visibleItems);
 
   const handleViewDetails = (id: number) => {
     // Navigate to item detail page or recovery page
@@ -182,7 +185,7 @@ export default function BountyBoardClient({ items: initialItems }: BountyBoardCl
                       </div>
                       <div className="d-flex justify-content-between mb-1">
                         <span className="text-muted">📅 Date:</span>
-                        <span>{formatDate(item.date)}</span>
+                        <span suppressHydrationWarning>{formatDate(item.date)}</span>
                       </div>
                       <div className="d-flex justify-content-between">
                         <span className="text-muted">👤 Reported by:</span>
