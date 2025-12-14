@@ -5,9 +5,9 @@
 
 import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 
-export default function LoginPage() {
+function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
   const [email, setEmail] = useState('');
@@ -97,5 +97,13 @@ export default function LoginPage() {
         </p>
       </form>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="page-style"><div className="card-style">Loading...</div></div>}>
+      <LoginForm />
+    </Suspense>
   );
 }

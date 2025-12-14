@@ -3,6 +3,9 @@ import authOptions from '@/lib/authOptions';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import AddLostItemForm from '@/components/AddLostItemForm';
 
+// Force dynamic rendering since this page requires authentication
+export const dynamic = 'force-dynamic';
+
 const AddLostItem = async () => {
   // Protect the page, only logged in users can access it.
   const session = await getServerSession(authOptions);

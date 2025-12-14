@@ -2,6 +2,9 @@ import { prisma } from '@/lib/prisma';
 import BountyBoardClient from '@/components/BountyBoardClient';
 import { Item } from '@/components/BountyBoard';
 
+// Force dynamic rendering since this page uses database queries
+export const dynamic = 'force-dynamic';
+
 /**
  * Server component that fetches bounty items and passes them to the client component
  */

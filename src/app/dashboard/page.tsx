@@ -5,6 +5,9 @@ import { prisma } from '@/lib/prisma';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 
+// Force dynamic rendering since this page uses database queries and auth
+export const dynamic = 'force-dynamic';
+
 const UserDashboard = async () => {
   // Protect the page, only logged in users can access it.
   const session = await getServerSession(authOptions);

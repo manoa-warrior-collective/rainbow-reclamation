@@ -5,6 +5,9 @@ import authOptions from '@/lib/authOptions';
 import StatsGrid from '@/components/StatsGrid';
 import AdminActionCards from '@/components/AdminActionCards';
 
+// Force dynamic rendering since this page uses database queries and auth
+export const dynamic = 'force-dynamic';
+
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
 
