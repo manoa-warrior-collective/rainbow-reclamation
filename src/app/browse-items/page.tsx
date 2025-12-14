@@ -1,79 +1,76 @@
-/* eslint-disable react/jsx-one-expression-per-line */
+import { Container, Row, Col, Alert } from 'react-bootstrap';
+import { getServerSession } from 'next-auth';
+import { prisma } from '@/lib/prisma';
+import { loggedInProtectedPage } from '@/lib/page-protection';
+import authOptions from '@/lib/authOptions';
+import FoundItemCard from '@/components/FoundItemCard';
 
-'use client';
+// Force dynamic rendering since this page uses database queries and auth
+export const dynamic = 'force-dynamic';
 
-import { Container, Row, Col, Button } from 'react-bootstrap';
-import Card from 'react-bootstrap/Card';
-import { useRouter } from 'next/navigation';
+const BrowseItemsPage = async () => {
+  // Protect the page, only logged in users can access it.
+  const session = await getServerSession(authOptions);
+  loggedInProtectedPage(
+    session as {
+      user: { email: string; id: string; randomKey: string };
+    } | null,
+    '/browse-items',
+  );
 
-const BrowseItemsPage = () => {
-  const router = useRouter();
-
-  // Mock items data
-  const items = [
-    {
-      id: 1,
-      title: 'Blue Backpack',
-      description: 'Found near Hamilton Library',
-      category: 'Accessories',
-      date: '2024-01-15',
-      location: 'Hamilton Library',
-      type: 'found',
+  // Fetch all items with FOUND status
+  const foundItems = await prisma.item.findMany({
+    where: {
+      status: 'FOUND',
     },
-    {
-      id: 2,
-      title: 'iPhone 13',
-      description: 'Black iPhone found in Campus Center',
-      category: 'Electronics',
-      date: '2024-01-14',
-      location: 'Campus Center',
-      type: 'found',
+    orderBy: {
+      createdAt: 'desc',
     },
-    {
-      id: 3,
-      title: 'Calculus Textbook',
-      description: 'Math textbook left in classroom',
-      category: 'Books',
-      date: '2024-01-13',
-      location: 'Keller Hall',
-      type: 'found',
-    },
-  ];
+  });
 
-  const handleClaimItem = (id: number) => {
-    router.push(`/recovery/${id}`);
-  };
+  console.log('Found items count:', foundItems.length); // Debug log
+
+  // Transform items to match the client component expectations
+  const transformedItems = foundItems.map((item) => ({
+    id: item.id,
+    name: item.name,
+    description: item.description,
+    category: item.category,
+    status: item.status,
+    building: item.building,
+    location: item.location,
+    date: item.date.toISOString(),
+    imageUrl: item.imageUrl || undefined,
+    contactInfo: item.contactInfo,
+    reportedBy: item.reportedBy,
+    bountyStatus: item.bountyStatus,
+    bountyReward: item.bountyReward || undefined,
+    createdAt: item.createdAt.toISOString(),
+    updatedAt: item.updatedAt.toISOString(),
+  }));
 
   return (
     <main>
-      <Container className="py-4 mt-4">
+      <Container id="list" fluid className="py-3">
         <Row>
           <Col>
-            <h1 className="mb-4">Browse Items</h1>
-            <p className="text-muted">Found items reported on campus</p>
+            <h1 className="mb-4">Browse Found Items</h1>
+            <p className="text-muted">Items found on campus waiting to be claimed</p>
+            {transformedItems.length === 0 ? (
+              <Alert variant="info">
+                <Alert.Heading>No found items available</Alert.Heading>
+                <p>There are currently no found items reported. Check back later!</p>
+              </Alert>
+            ) : (
+              <Row xs={1} md={2} lg={3} className="g-4">
+                {transformedItems.map((item) => (
+                  <Col key={item.id}>
+                    <FoundItemCard items={item} />
+                  </Col>
+                ))}
+              </Row>
+            )}
           </Col>
-        </Row>
-        <Row>
-          {items.map((item) => (
-            <Col key={item.id} md={6} lg={4} className="mb-4">
-              <Card>
-                <Card.Body>
-                  <Card.Title>{item.title}</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">{item.category}</Card.Subtitle>
-                  <Card.Text>{item.description}</Card.Text>
-                  <div className="mb-2">
-                    <strong>Location:</strong> {item.location}
-                  </div>
-                  <div className="mb-3">
-                    <strong>Date Found:</strong> {item.date}
-                  </div>
-                  <Button variant="primary" onClick={() => handleClaimItem(item.id)}>
-                    Claim Item
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
         </Row>
       </Container>
     </main>
