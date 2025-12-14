@@ -5,6 +5,7 @@
 
 import { Container, Row, Col, Card, Badge, Spinner, Alert, Form, InputGroup, Button } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import BountyBoard, { type Item } from '@/components/BountyBoard';
 import { Category, Building } from '@prisma/client';
 
@@ -21,18 +22,23 @@ interface BountyBoardClientProps {
  */
 export default function BountyBoardClient({ items: initialItems }: BountyBoardClientProps) {
   const router = useRouter();
+  const [hiddenItems, setHiddenItems] = useState<number[]>([]);
 
-  const { items, loading, error, filters, updateFilter, removeItem, stats } = useBountyBoard(initialItems);
+  const { items, loading, error, filters, updateFilter, stats } = useBountyBoard(
+    initialItems.filter((item) => !hiddenItems.includes(item.id)),
+  );
 
-  const handleClaimItem = (id: number) => {
-    router.push(`/recovery/${id}`);
+  const handleViewDetails = (id: number) => {
+    // Navigate to item detail page or recovery page
+    router.push(`/item/${id}`);
   };
 
-  const handleSubmitItem = (itemId: number) => {
-    // Remove the item from the board
-    removeItem(itemId);
-    // Navigate to submission page immediately after state update
-    router.push('/submission');
+  const handleFoundItem = (itemId: number) => {
+    // Hide the item from view immediately
+    setHiddenItems((prev) => [...prev, itemId]);
+
+    // Navigate to submission page with the lost item ID
+    router.push(`/submission?lostItemId=${itemId}`);
   };
 
   if (loading) {
@@ -185,16 +191,21 @@ export default function BountyBoardClient({ items: initialItems }: BountyBoardCl
                     </div>
                   </div>
                 </Card.Body>
-                <Card.Footer className="bg-light d-flex justify-content-between align-items-center">
-                  <small className="text-muted">Contact: {item.contactInfo}</small>
-                  <div className="d-flex gap-2">
-                    <Button variant="success" size="sm" onClick={() => handleSubmitItem(item.id)}>
-                      Submit Found Item
+                <Card.Footer className="bg-light">
+                  <div className="d-flex flex-column gap-2">
+                    <Button variant="success" size="sm" onClick={() => handleFoundItem(item.id)} className="w-100">
+                      🎉 I Found This Item!
                     </Button>
-                    <Button variant="primary" size="sm" onClick={() => handleClaimItem(item.id)}>
-                      Claim Item
+                    <Button
+                      variant="outline-primary"
+                      size="sm"
+                      onClick={() => handleViewDetails(item.id)}
+                      className="w-100"
+                    >
+                      👁️ View Details
                     </Button>
                   </div>
+                  <small className="text-muted d-block mt-2 text-center">Contact: {item.contactInfo}</small>
                 </Card.Footer>
               </Card>
             </Col>

@@ -6,7 +6,7 @@ import { Button } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import { useRouter } from 'next/navigation';
 
-// Define the Item type based on your Prisma schema
+// Define the Item type to match what the server sends
 type Item = {
   id: number;
   name: string;
@@ -15,14 +15,14 @@ type Item = {
   status: string;
   building: string;
   location: string;
-  date: Date;
-  imageUrl: string | null;
+  date: string; // Changed to string (ISO date from server)
+  imageUrl?: string; // Changed to optional
   contactInfo: string;
   reportedBy: string;
   bountyStatus: boolean;
-  bountyReward: number | null;
-  createdAt: Date;
-  updatedAt: Date;
+  bountyReward?: number; // Changed to optional
+  createdAt: string; // Changed to string
+  updatedAt: string; // Changed to string
 };
 
 const FoundItemCard = ({ items }: { items: Item }) => {
@@ -49,7 +49,7 @@ const FoundItemCard = ({ items }: { items: Item }) => {
         </div>
         {items.bountyStatus && items.bountyReward && (
           <div className="mb-3 text-success">
-            <strong>Bounty:</strong> ${items.bountyReward}
+            <strong>Bounty:</strong> ${items.bountyReward.toFixed(2)}
           </div>
         )}
         <Button variant="primary" onClick={handleClaimItem} className="mt-auto">
