@@ -5,27 +5,30 @@
 import { Button } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import { useRouter } from 'next/navigation';
+import { Category, Status, Building } from '@prisma/client';
 
 // Define the Item type to match what the server sends
-type Item = {
-  id: number;
-  name: string;
-  description: string;
-  category: string;
-  status: string;
-  building: string;
-  location: string;
-  date: string; // Changed to string (ISO date from server)
-  imageUrl?: string; // Changed to optional
-  contactInfo: string;
-  reportedBy: string;
-  bountyStatus: boolean;
-  bountyReward?: number; // Changed to optional
-  createdAt: string; // Changed to string
-  updatedAt: string; // Changed to string
-};
+interface FoundItemCardProps {
+  items: {
+    id: number;
+    name: string;
+    description: string;
+    category: Category;
+    status: Status;
+    building: Building;
+    location: string;
+    date: string;
+    imageUrl?: string;
+    contactInfo: string;
+    reportedBy: string;
+    bountyStatus: boolean;
+    bountyReward?: number;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
 
-const FoundItemCard = ({ items }: { items: Item }) => {
+const FoundItemCard = ({ items }: FoundItemCardProps) => {
   const router = useRouter();
 
   const handleClaimItem = () => {

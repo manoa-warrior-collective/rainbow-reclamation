@@ -262,3 +262,17 @@ export async function getItemById(id: number) {
     where: { id },
   });
 }
+
+/**
+ * Claims an item by updating its status to CLAIMED.
+ * @param itemId, the id of the item to claim.
+ */
+export async function claimItem(itemId: number) {
+  await prisma.item.update({
+    where: { id: itemId },
+    data: {
+      status: 'CLAIMED',
+      updatedAt: new Date(),
+    },
+  });
+}
