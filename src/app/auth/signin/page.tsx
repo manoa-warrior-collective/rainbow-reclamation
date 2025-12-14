@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-one-expression-per-line */
 
 'use client';
 
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 
 export default function LoginPage() {
-  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -19,10 +21,10 @@ export default function LoginPage() {
     setError(null);
 
     const result = await signIn('credentials', {
-      // callbackUrl: '/list',
       email,
       password,
       redirect: false,
+      callbackUrl,
     });
 
     if (result?.error) {
@@ -32,7 +34,8 @@ export default function LoginPage() {
     }
 
     setIsSubmitting(false);
-    router.push('/');
+    // Use the URL from the result if available, otherwise use callbackUrl
+    window.location.href = result?.url || callbackUrl;
   };
 
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-one-expression-per-line */
 
 'use client';
@@ -30,7 +31,6 @@ export default function SignupPage() {
     try {
       await createUser({ email: trimmedEmail, password });
       const result = await signIn('credentials', {
-        callbackUrl: '/',
         email: trimmedEmail,
         password,
         redirect: false,
@@ -38,14 +38,15 @@ export default function SignupPage() {
 
       if (result?.error) {
         setError('Account created, but signing in failed. Please try logging in.');
+        setIsSubmitting(false);
         return;
       }
 
-      router.push('/');
+      setIsSubmitting(false);
+      window.location.href = '/dashboard';
     } catch (err) {
       console.error('Sign up failed', err);
       setError('Unable to create account. Please try a different email or try again later.');
-    } finally {
       setIsSubmitting(false);
     }
   };
